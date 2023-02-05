@@ -1,0 +1,22 @@
+﻿using AutoMapper;
+using BookStore.Application.Interfaces;
+using BookStore.Domain.Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace BookStore.Application.ViewModels
+{
+    public class AuthorViewModel : IMapWith<Author>
+    {
+        public string FullName { get; set; }
+        public void UseMap(Profile profile)
+        {
+            profile.CreateMap<Author, AuthorViewModel>()
+                .ForMember(avm => avm.FullName, mem => mem
+                    .MapFrom(a => a.Surname + " " + a.Name));
+        }
+    }
+}
