@@ -10,7 +10,7 @@ namespace BookStore.Application.Interfaces
 {
     public interface IOrderService : IService<Order, OrderViewModel>
     {
-        Task<IEnumerable<OrderViewModel>> GetInDateRangeAsync(DateTime startDate, DateTime endDate);
+        Task<IEnumerable<OrderViewModel>> GetInDateRangeAsync(DateTime startDate, DateTime endDate, CancellationToken cancellationToken);
         Task<bool> AddDetailAsync(OrderDetail detail, CancellationToken cancellationToken);
         Task<bool> RemoveDetailAsync(Guid detailId, CancellationToken cancellationToken);
         Task<bool> ChangeDetailAmountAsync(Guid detailId, int newAmount, CancellationToken cancellationToken);

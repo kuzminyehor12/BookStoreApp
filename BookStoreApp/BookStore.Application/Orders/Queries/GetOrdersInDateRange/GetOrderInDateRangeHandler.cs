@@ -19,7 +19,7 @@ namespace BookStore.Application.Orders.Queries.GetOrdersInDateRange
 
         public async Task<IEnumerable<OrderViewModel>> Handle(GetOrdersInDateRange request, CancellationToken cancellationToken)
         {
-            return await _service.GetInDateRangeAsync(request.StartDate, request.EndDate);
+            return await _service.GetInDateRangeAsync(request.StartDate, request.EndDate, cancellationToken);
         }
     }
 }

@@ -15,9 +15,4 @@
     <ProjectReference Include="..\BookStore.Domain\BookStore.Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Authors\Queries\GetAuthorById\" />
-    <Folder Include="Orders\" />
-  </ItemGroup>
-
 </Project>
