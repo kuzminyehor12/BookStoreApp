@@ -11,6 +11,5 @@ namespace BookStore.Persistance.Interfaces
     public interface IOrderRepository : IRepository<Order>
     {
         Task<IEnumerable<Order>> GetInDateRangeAsync(DateTime startDate, DateTime endDate, CancellationToken cancellationToken);
-        Task<IEnumerable<OrderDetail>> GetDetailsByOrderIdAsync(Guid orderId, CancellationToken cancellationToken);
     }
 }

@@ -9,6 +9,7 @@ namespace BookStore.Persistance.Interfaces
 {
     public interface IRepository<TEntity> where TEntity: BaseModel
     {
+        public string TableName { get; }
         Task<IEnumerable<TEntity>> GetAllAsync(CancellationToken cancellationToken);
         Task<TEntity> GetByIdAsync(Guid id, CancellationToken cancellationToken);
         Task<bool> CreateAsync(TEntity entity, CancellationToken cancellationToken);

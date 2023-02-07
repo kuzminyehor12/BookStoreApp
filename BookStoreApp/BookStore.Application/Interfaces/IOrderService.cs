@@ -15,5 +15,6 @@ namespace BookStore.Application.Interfaces
         Task<bool> RemoveDetailAsync(Guid detailId, CancellationToken cancellationToken);
         Task<bool> ChangeDetailAmountAsync(Guid detailId, int newAmount, CancellationToken cancellationToken);
         Task<IEnumerable<OrderDetailViewModel>> GetDetailsByOrderIdAsync(Guid orderId, CancellationToken cancellationToken);
+        Task<IEnumerable<OrderDetailViewModel>> GetDetailsByBookIdAsync(Guid bookId, CancellationToken cancellationToken);
     }
 }

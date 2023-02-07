@@ -9,52 +9,59 @@ namespace BookStore.Persistance.Services
 {
     public class OrderService : IOrderService
     {
-        private readonly IUnitOfWork _unitOfWork;
+        private readonly IOrderRepository _orderRepository;
+        private readonly IDetailRepository _detailRepository;
         private readonly IMapper _mapper;
-        public OrderService(IUnitOfWork unifOfWork, IMapper mapper)
+        public OrderService(
+            IOrderRepository orderRepository, 
+            IDetailRepository detailRepository, 
+            IMapper mapper)
         {
-            _unitOfWork = unifOfWork;
+            _orderRepository = orderRepository;
+            _detailRepository = detailRepository;
             _mapper = mapper;
         }
 
         public async Task<bool> CreateAsync(Order model, CancellationToken cancellationToken)
         {
-            await _unitOfWork.OrderRepository.CreateAsync(model, cancellationToken);
-            return await _unitOfWork.SaveChangesAsync();
+            return await _orderRepository.CreateAsync(model, cancellationToken);
         }
 
         public async Task<bool> DeleteAsync(Guid id, CancellationToken cancellationToken)
         {
-            await _unitOfWork.OrderRepository.DeleteAsync(id, cancellationToken);
-            return await _unitOfWork.SaveChangesAsync();
+            return await _orderRepository.DeleteAsync(id, cancellationToken);
         }
 
         public async Task<bool> UpdateAsync(Order model, CancellationToken cancellationToken)
         {
-            await _unitOfWork.OrderRepository.UpdateAsync(model, cancellationToken);
-            return await _unitOfWork.SaveChangesAsync();
+            return await _orderRepository.UpdateAsync(model, cancellationToken);
         }
         public async Task<IEnumerable<OrderViewModel>> GetAllAsync(CancellationToken cancellationToken)
         {
-            var entities = await _unitOfWork.OrderRepository.GetAllAsync(cancellationToken);
+            var entities = await _orderRepository.GetAllAsync(cancellationToken);
             return _mapper.Map<IEnumerable<OrderViewModel>>(entities);
         }
 
         public async Task<OrderViewModel> GetByIdAsync(Guid id, CancellationToken cancellationToken)
         {
-            var entity = await _unitOfWork.OrderRepository.GetByIdAsync(id, cancellationToken);
+            var entity = await _orderRepository.GetByIdAsync(id, cancellationToken);
+
+            if (entity is null)
+            {
+                throw new BookStoreException("Entity not found");
+            }
+
             return _mapper.Map<OrderViewModel>(entity);
         }
 
         public async Task<bool> AddDetailAsync(OrderDetail detail, CancellationToken cancellationToken)
         {
-            await _unitOfWork.DetailRepository.CreateAsync(detail, cancellationToken);
-            return await _unitOfWork.SaveChangesAsync();
+            return await _detailRepository.CreateAsync(detail, cancellationToken);
         }
 
         public async Task<bool> ChangeDetailAmountAsync(Guid detailId, int newAmount, CancellationToken cancellationToken)
         {
-            var detail = await _unitOfWork.DetailRepository.GetByIdAsync(detailId, cancellationToken);
+            var detail = await _detailRepository.GetByIdAsync(detailId, cancellationToken);
 
             if(detail is null)
             {
@@ -69,26 +76,30 @@ namespace BookStore.Persistance.Services
                 OrderId = detail.OrderId
             };
 
-            await _unitOfWork.DetailRepository.UpdateAsync(newDetail, cancellationToken);
-            return await _unitOfWork.SaveChangesAsync();
+            return await _detailRepository.UpdateAsync(newDetail, cancellationToken);
         }
 
         public async Task<IEnumerable<OrderDetailViewModel>> GetDetailsByOrderIdAsync(Guid orderId, CancellationToken cancellationToken)
         {
-            var entities = await _unitOfWork.DetailRepository.GetOrderDetailsByOrderId(orderId, cancellationToken);
+            var entities = await _detailRepository.GetOrderDetailsByOrderId(orderId, cancellationToken);
             return _mapper.Map<IEnumerable<OrderDetailViewModel>>(entities);
         }
 
         public async Task<IEnumerable<OrderViewModel>> GetInDateRangeAsync(DateTime startDate, DateTime endDate, CancellationToken cancellationToken)
         {
-            var entities = await _unitOfWork.OrderRepository.GetInDateRangeAsync(startDate, endDate, cancellationToken);
+            var entities = await _orderRepository.GetInDateRangeAsync(startDate, endDate, cancellationToken);
             return _mapper.Map<IEnumerable<OrderViewModel>>(entities);
         }
 
         public async Task<bool> RemoveDetailAsync(Guid detailId, CancellationToken cancellationToken)
         {
-            await _unitOfWork.DetailRepository.DeleteAsync(detailId, cancellationToken);
-            return await _unitOfWork.SaveChangesAsync();
+            return await _detailRepository.DeleteAsync(detailId, cancellationToken);
+        }
+
+        public async Task<IEnumerable<OrderDetailViewModel>> GetDetailsByBookIdAsync(Guid bookId, CancellationToken cancellationToken)
+        {
+            var entities = await _detailRepository.GetOrderDetailsByBookId(bookId, cancellationToken);
+            return _mapper.Map<IEnumerable<OrderDetailViewModel>>(entities);
         }
     }
 }

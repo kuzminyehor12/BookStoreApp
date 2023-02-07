@@ -23,6 +23,7 @@ namespace BookStore.Application.Orders.Commands.CreateOrder
             var order = new Order
             {
                 Total = request.Total,
+                Discount = request.Discount,
                 CreationDate = request.CreationDate,
                 ClosingDate = null,
                 Status = OrderStatus.Open

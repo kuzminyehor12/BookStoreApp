@@ -8,8 +8,8 @@ namespace BookStore.Domain.Enums
 {
     public enum OrderStatus
     {
-        Open,
-        Paid,
-        Shipped
+        Open = 0,
+        Paid = 1,
+        Shipped = 2
     }
 }

@@ -13,42 +13,39 @@ namespace BookStore.Persistance.Services
 {
     public class AuthorService : IAuthorService
     {
-        private readonly IUnitOfWork _unitOfWork;
+        private readonly IAuthorRepository _authorRepository;
         private readonly IMapper _mapper;
-        public AuthorService(IUnitOfWork unifOfWork, IMapper mapper)
+        public AuthorService(IAuthorRepository authorRepository, IMapper mapper)
         {
-            _unitOfWork = unifOfWork;
+            _authorRepository = authorRepository;
             _mapper = mapper;
         }
 
         public async Task<bool> CreateAsync(Author model, CancellationToken cancellationToken)
         {
-            await _unitOfWork.AuthorRepository.CreateAsync(model, cancellationToken);
-            return await _unitOfWork.SaveChangesAsync();
+            return await _authorRepository.CreateAsync(model, cancellationToken);
         }
 
         public async Task<bool> DeleteAsync(Guid id, CancellationToken cancellationToken)
         {
-            await _unitOfWork.AuthorRepository.DeleteAsync(id, cancellationToken);
-            return await _unitOfWork.SaveChangesAsync();
+            return await _authorRepository.DeleteAsync(id, cancellationToken);
         }
 
         public async Task<bool> UpdateAsync(Author model, CancellationToken cancellationToken)
         {
-            await _unitOfWork.AuthorRepository.UpdateAsync(model, cancellationToken);
-            return await _unitOfWork.SaveChangesAsync();
+            return await _authorRepository.UpdateAsync(model, cancellationToken);
         }
 
 
         public async Task<IEnumerable<AuthorViewModel>> GetAllAsync(CancellationToken cancellationToken)
         {
-            var entities = await _unitOfWork.AuthorRepository.GetAllAsync(cancellationToken);
+            var entities = await _authorRepository.GetAllAsync(cancellationToken);
             return _mapper.Map<IEnumerable<AuthorViewModel>>(entities);
         }
 
         public async Task<AuthorViewModel> GetByIdAsync(Guid id, CancellationToken cancellationToken)
         {
-            var entity = await _unitOfWork.AuthorRepository.GetByIdAsync(id, cancellationToken);
+            var entity = await _authorRepository.GetByIdAsync(id, cancellationToken);
             return _mapper.Map<AuthorViewModel>(entity);
         }
     }

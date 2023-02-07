@@ -9,6 +9,7 @@ namespace BookStore.Persistance.Interfaces
 {
     public interface IDetailRepository : IRepository<OrderDetail>
     {
-        Task<IEnumerable<OrderDetail>> GetOrderDetailsByOrderId(Guid id, CancellationToken cancellationToken);
+        Task<IEnumerable<OrderDetail>> GetOrderDetailsByOrderId(Guid orderId, CancellationToken cancellationToken);
+        Task<IEnumerable<OrderDetail>> GetOrderDetailsByBookId(Guid bookId, CancellationToken cancellationToken);
     }
 }

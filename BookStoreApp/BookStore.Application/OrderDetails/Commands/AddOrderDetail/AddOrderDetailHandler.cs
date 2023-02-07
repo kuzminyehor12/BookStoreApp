@@ -26,7 +26,7 @@ namespace BookStore.Application.OrderDetails.Commands.AddOrderDetail
                 Amount = request.Amount
             };
 
-            return await _service.AddDetailAsync(detail);
+            return await _service.AddDetailAsync(detail, cancellationToken);
         }
     }
 }
