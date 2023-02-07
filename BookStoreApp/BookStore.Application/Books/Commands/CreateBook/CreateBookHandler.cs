@@ -5,14 +5,14 @@ using MediatR;
 
 namespace BookStore.Application.Books.Commands.CreateBookCommand
 {
-    public class CreateBookHandler : IRequestHandler<CreateBookCommand, bool>
+    public class CreateBookHandler : IRequestHandler<CreateBook, bool>
     {
         private readonly IBookService _service;
         public CreateBookHandler(IBookService service)
         {
             _service = service;
         }
-        public async Task<bool> Handle(CreateBookCommand request, CancellationToken cancellationToken)
+        public async Task<bool> Handle(CreateBook request, CancellationToken cancellationToken)
         {
             var book = new Book
             {

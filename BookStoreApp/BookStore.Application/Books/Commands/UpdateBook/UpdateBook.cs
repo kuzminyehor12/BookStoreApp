@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BookStore.Application.Books.Commands.UpdateBookCommand
 {
-    public class UpdateBookCommand : IRequest<bool>
+    public class UpdateBook : IRequest<bool>
     {
         public string ISBN { get; set; }
         public string Title { get; set; }

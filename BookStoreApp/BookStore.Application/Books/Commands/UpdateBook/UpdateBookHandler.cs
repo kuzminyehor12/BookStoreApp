@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 
 namespace BookStore.Application.Books.Commands.UpdateBookCommand
 {
-    internal class UpdateBookHandler : IRequestHandler<UpdateBookCommand, bool>
+    internal class UpdateBookHandler : IRequestHandler<UpdateBook, bool>
     {
         private readonly IBookService _service;
         public UpdateBookHandler(IBookService service)
         {
             _service = service;
         }
-        public async Task<bool> Handle(UpdateBookCommand request, CancellationToken cancellationToken)
+        public async Task<bool> Handle(UpdateBook request, CancellationToken cancellationToken)
         {
             var book = new Book
             {

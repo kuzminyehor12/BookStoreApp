@@ -9,14 +9,14 @@ using System.Threading.Tasks;
 
 namespace BookStore.Application.Books.Queries.GetAllBooksQuery
 {
-    internal class GetAllBooksHandler : IRequestHandler<GetAllBooksQuery, IEnumerable<BookViewModel>>
+    internal class GetAllBooksHandler : IRequestHandler<GetAllBooks, IEnumerable<BookViewModel>>
     {
         private readonly IBookService _service;
         public GetAllBooksHandler(IBookService service)
         {
             _service = service;
         }
-        public async Task<IEnumerable<BookViewModel>> Handle(GetAllBooksQuery request, CancellationToken cancellationToken)
+        public async Task<IEnumerable<BookViewModel>> Handle(GetAllBooks request, CancellationToken cancellationToken)
         {
             return await _service.GetAllAsync(cancellationToken);
         }
