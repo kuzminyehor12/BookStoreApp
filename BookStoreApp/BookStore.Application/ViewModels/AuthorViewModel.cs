@@ -11,6 +11,7 @@ namespace BookStore.Application.ViewModels
 {
     public class AuthorViewModel : IMapWith<Author>
     {
+        public Guid Id { get; set; }
         public string FullName { get; set; }
         public void UseMap(Profile profile)
         {

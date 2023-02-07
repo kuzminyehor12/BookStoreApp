@@ -14,7 +14,7 @@ namespace BookStoreApp.DataAccess.Repositories
     public class AuthorRepository : IAuthorRepository
     {
         private readonly IDbConnection _connection;
-        public string TableName => "Authors";
+        public string TableName => "\"Authors\"";
         public AuthorRepository(IDbConnection connection)
         {
             _connection = connection;
@@ -23,13 +23,9 @@ namespace BookStoreApp.DataAccess.Repositories
         public async Task<bool> CreateAsync(Author entity, CancellationToken cancellationToken)
         {
             var command = $"INSERT INTO {TableName}(name, surname) " +
-                         "VALUES (@name, @surname)";
+                         "VALUES (@Name, @Surname)";;
 
-            var parameters = new DynamicParameters();
-            parameters.Add("name", entity.Name, DbType.String);
-            parameters.Add("surname", entity.Surname, DbType.String);
-
-            var affected = await _connection.ExecuteAsync(command, cancellationToken);
+            var affected = await _connection.ExecuteAsync(command, entity);
             return affected > 0;
         }
 
@@ -54,13 +50,9 @@ namespace BookStoreApp.DataAccess.Repositories
 
         public async Task<bool> UpdateAsync(Author entity, CancellationToken cancellationToken)
         {
-            var command = $"UPDATE {TableName} SET name=@name, surname=@surname";
-
-            var parameters = new DynamicParameters();
-            parameters.Add("name", entity.Name, DbType.String);
-            parameters.Add("surname", entity.Surname, DbType.String);
-
-            var affected = await _connection.ExecuteAsync(command, cancellationToken);
+            var command = $"UPDATE {TableName} SET name=@Name, surname=@Surname " +
+                           "WHERE id=@Id";
+            var affected = await _connection.ExecuteAsync(command, entity);
             return affected > 0;
         }
     }

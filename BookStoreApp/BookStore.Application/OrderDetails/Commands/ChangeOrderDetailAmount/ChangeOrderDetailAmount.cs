@@ -10,6 +10,6 @@ namespace BookStore.Application.OrderDetails.Commands.ChangeOrderDetailAmount
     public class ChangeOrderDetailAmount : IRequest<bool>
     {
         public Guid Id { get; set; }
-        public int Amount { get; set; }
+        public int? Amount { get; set; }
     }
 }

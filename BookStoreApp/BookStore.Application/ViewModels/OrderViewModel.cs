@@ -12,6 +12,7 @@ namespace BookStore.Application.ViewModels
 {
     public class OrderViewModel : IMapWith<Order>
     {
+        public Guid Id { get; set; }
         public decimal Total { get; set; }
         public DateTime CreationDate { get; set; }
         public DateTime ClosingDate { get; set; }

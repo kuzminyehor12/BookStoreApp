@@ -82,10 +82,11 @@ namespace BookStore.WebApi.Controllers
         }
 
         [ProducesResponseType(StatusCodes.Status200OK)]
-        [HttpPut]
-        public async Task<ActionResult> UpdateOrder(OrderWriteModel orderDto)
+        [HttpPut("{id}")]
+        public async Task<ActionResult> UpdateOrder(Guid id, OrderWriteModel orderDto)
         {
             var command = _mapper.Map<UpdateOrder>(orderDto);
+            command.Id = id;
             var result = await _mediator.Send(command);
             return Ok(new { Success = result });
         }
@@ -113,7 +114,7 @@ namespace BookStore.WebApi.Controllers
 
         [ProducesResponseType(StatusCodes.Status200OK)]
         [HttpDelete("detail/{detailId}")]
-        public async Task<ActionResult> AddOrderDetail(Guid detailId)
+        public async Task<ActionResult> RemoveOrderDetail(Guid detailId)
         {
             var command = new RemoveOrderDetail
             { 

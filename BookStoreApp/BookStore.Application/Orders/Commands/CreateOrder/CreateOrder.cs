@@ -10,8 +10,8 @@ namespace BookStore.Application.Orders.Commands.CreateOrder
 {
     public class CreateOrder : IRequest<bool>
     {
-        public decimal Total { get; set; }
-        public decimal Discount { get; set; }
+        public decimal? Total { get; set; }
+        public decimal? Discount { get; set; }
         public DateTime CreationDate { get; set; }
     }
 }

@@ -28,6 +28,7 @@ namespace BookStore.Application.Common.Mappings
             {
                 var instance = Activator.CreateInstance(type);
                 var methodInfo = type.GetMethod("UseMap");
+                methodInfo?.Invoke(instance, new object[]{ this });
             }
         }
     }

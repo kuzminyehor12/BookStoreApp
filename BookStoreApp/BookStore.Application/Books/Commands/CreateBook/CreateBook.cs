@@ -12,8 +12,8 @@ namespace BookStore.Application.Books.Commands.CreateBookCommand
         public string ISBN { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
-        public int AmountOnStock { get; set; }
-        public decimal Price { get; set; }
-        public Guid AuthorId { get; set; }
+        public int? AmountOnStock { get; set; }
+        public decimal? Price { get; set; }
+        public Guid? AuthorId { get; set; }
     }
 }

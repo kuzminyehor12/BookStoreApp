@@ -22,8 +22,8 @@ namespace BookStore.Application.Orders.Commands.CreateOrder
         {
             var order = new Order
             {
-                Total = request.Total,
-                Discount = request.Discount,
+                Total = request.Total ?? default,
+                Discount = request.Discount ?? default,
                 CreationDate = request.CreationDate,
                 ClosingDate = null,
                 Status = OrderStatus.Open

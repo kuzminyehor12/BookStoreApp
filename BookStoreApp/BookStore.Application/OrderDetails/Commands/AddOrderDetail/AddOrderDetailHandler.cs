@@ -23,7 +23,7 @@ namespace BookStore.Application.OrderDetails.Commands.AddOrderDetail
             {
                 BookId = request.BookId,
                 OrderId = request.OrderId,
-                Amount = request.Amount
+                Amount = request.Amount ?? default
             };
 
             return await _service.AddDetailAsync(detail, cancellationToken);

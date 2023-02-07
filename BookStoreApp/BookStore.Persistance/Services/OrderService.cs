@@ -4,6 +4,7 @@ using BookStore.Application.ViewModels;
 using BookStore.Domain.Models;
 using BookStore.Persistance.Interfaces;
 using BookStore.Persistance.Validation;
+using static System.Reflection.Metadata.BlobBuilder;
 
 namespace BookStore.Persistance.Services
 {
@@ -11,14 +12,17 @@ namespace BookStore.Persistance.Services
     {
         private readonly IOrderRepository _orderRepository;
         private readonly IDetailRepository _detailRepository;
+        private readonly IBookRepository _bookRepository;
         private readonly IMapper _mapper;
         public OrderService(
             IOrderRepository orderRepository, 
-            IDetailRepository detailRepository, 
+            IDetailRepository detailRepository,
+            IBookRepository bookRepository,
             IMapper mapper)
         {
             _orderRepository = orderRepository;
             _detailRepository = detailRepository;
+            _bookRepository = bookRepository;
             _mapper = mapper;
         }
 
@@ -81,13 +85,32 @@ namespace BookStore.Persistance.Services
 
         public async Task<IEnumerable<OrderDetailViewModel>> GetDetailsByOrderIdAsync(Guid orderId, CancellationToken cancellationToken)
         {
-            var entities = await _detailRepository.GetOrderDetailsByOrderId(orderId, cancellationToken);
-            return _mapper.Map<IEnumerable<OrderDetailViewModel>>(entities);
+            var books = await _bookRepository.GetAllAsync(cancellationToken);
+            var details = await _detailRepository.GetOrderDetailsByOrderId(orderId, cancellationToken);
+            var viewModels = _mapper.Map<IEnumerable<OrderDetailViewModel>>(details);
+
+            foreach (var detail in viewModels)
+            {
+                detail.BookName = books.FirstOrDefault(b => details.Any(d => d.BookId == b.Id))?.Title;
+                detail.BookPrice = books.FirstOrDefault(b => details.Any(d => d.BookId == b.Id))?.Price ?? default;
+            }
+
+            return viewModels;
         }
 
-        public async Task<IEnumerable<OrderViewModel>> GetInDateRangeAsync(DateTime startDate, DateTime endDate, CancellationToken cancellationToken)
+        public async Task<IEnumerable<OrderViewModel>> GetInDateRangeAsync(DateTime? startDate, DateTime? endDate, CancellationToken cancellationToken)
         {
-            var entities = await _orderRepository.GetInDateRangeAsync(startDate, endDate, cancellationToken);
+            if(startDate is null)
+            {
+                startDate = DateTime.MinValue;
+            }
+
+            if(endDate is null)
+            {
+                endDate = DateTime.Now;
+            }
+
+            var entities = await _orderRepository.GetInDateRangeAsync((DateTime)startDate, (DateTime)endDate, cancellationToken);
             return _mapper.Map<IEnumerable<OrderViewModel>>(entities);
         }
 
@@ -98,8 +121,17 @@ namespace BookStore.Persistance.Services
 
         public async Task<IEnumerable<OrderDetailViewModel>> GetDetailsByBookIdAsync(Guid bookId, CancellationToken cancellationToken)
         {
-            var entities = await _detailRepository.GetOrderDetailsByBookId(bookId, cancellationToken);
-            return _mapper.Map<IEnumerable<OrderDetailViewModel>>(entities);
+            var books = await _bookRepository.GetAllAsync(cancellationToken);
+            var details = await _detailRepository.GetOrderDetailsByBookId(bookId, cancellationToken);
+            var viewModels = _mapper.Map<IEnumerable<OrderDetailViewModel>>(details);
+
+            foreach (var detail in viewModels)
+            {
+                detail.BookName = books.FirstOrDefault(b => details.Any(d => d.BookId == b.Id))?.Title;
+                detail.BookPrice = books.FirstOrDefault(b => details.Any(d => d.BookId == b.Id))?.Price ?? default;
+            }
+
+            return viewModels;
         }
     }
 }

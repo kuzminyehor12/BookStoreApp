@@ -8,7 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddDatabase(builder.Configuration);
-builder.Services.AddMediatR(typeof(Program));
+builder.Services.AddMediatR(typeof(IService<,>).Assembly);
 
 builder.Services.AddAutoMapper(options =>
 {

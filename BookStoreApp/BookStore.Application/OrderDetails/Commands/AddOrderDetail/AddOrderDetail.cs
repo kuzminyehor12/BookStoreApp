@@ -11,6 +11,6 @@ namespace BookStore.Application.OrderDetails.Commands.AddOrderDetail
     {
         public Guid BookId { get; set; }
         public Guid OrderId { get; set; }
-        public int Amount { get; set; }
+        public int? Amount { get; set; }
     }
 }

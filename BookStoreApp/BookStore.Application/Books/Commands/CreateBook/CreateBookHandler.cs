@@ -18,8 +18,8 @@ namespace BookStore.Application.Books.Commands.CreateBookCommand
             {
                 Title = request.Title,
                 Description = request.Description,
-                Price = request.Price,
-                AmountOnStock = request.AmountOnStock,
+                Price = request.Price ?? default,
+                AmountOnStock = request.AmountOnStock ?? default,
                 ISBN = request.ISBN,
                 AuthorId = request.AuthorId,
                 IsDeleted = false

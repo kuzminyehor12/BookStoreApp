@@ -1,4 +1,7 @@
-﻿using System;
+﻿using AutoMapper;
+using BookStore.Application.Interfaces;
+using BookStore.Domain.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,10 +9,15 @@ using System.Threading.Tasks;
 
 namespace BookStore.Application.ViewModels
 {
-    public class OrderDetailViewModel
+    public class OrderDetailViewModel : IMapWith<OrderDetail>
     {
-        public string BookName { get; set; }
-        public string Price { get; set; }
+        public Guid Id { get; set; }
+        public string? BookName { get; set; }
+        public decimal BookPrice { get; set; }
         public int Amount { get; set; }
+        public void UseMap(Profile profile)
+        {
+            profile.CreateMap<OrderDetail, OrderDetailViewModel>();
+        }
     }
 }

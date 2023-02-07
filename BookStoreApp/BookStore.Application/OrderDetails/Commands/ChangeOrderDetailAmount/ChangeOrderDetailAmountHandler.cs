@@ -18,7 +18,7 @@ namespace BookStore.Application.OrderDetails.Commands.ChangeOrderDetailAmount
 
         public async Task<bool> Handle(ChangeOrderDetailAmount request, CancellationToken cancellationToken)
         {
-            return await _service.ChangeDetailAmountAsync(request.Id, request.Amount, cancellationToken);
+            return await _service.ChangeDetailAmountAsync(request.Id, request.Amount ?? default, cancellationToken);
         }
     }
 }

@@ -22,11 +22,12 @@ namespace BookStore.Application.Orders.Commands.UpdateOrder
         {
             var order = new Order
             {
-                Total = request.Total,
-                Discount = request.Discount,
+                Id = request.Id,
+                Total = request.Total ?? default,
+                Discount = request.Discount ?? default,
                 CreationDate = request.CreationDate,
                 ClosingDate = request.ClosingDate,
-                Status = request.Status
+                Status = request.Status ?? default
             };
 
             return await _service.UpdateAsync(order, cancellationToken);

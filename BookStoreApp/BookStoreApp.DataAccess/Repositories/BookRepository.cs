@@ -13,7 +13,7 @@ namespace BookStoreApp.DataAccess.Repositories
     public class BookRepository: IBookRepository
     {
         private readonly IDbConnection _connection;
-        public string TableName => "Books";
+        public string TableName => "\"Books\"";
         public BookRepository(IDbConnection connection)
         {
             _connection = connection;
@@ -22,17 +22,9 @@ namespace BookStoreApp.DataAccess.Repositories
         public async Task<bool> CreateAsync(Book entity, CancellationToken cancellationToken)
         {
             var command = $"INSERT INTO {TableName}(isbn, title, description, amount_on_stock, price, author_id) " +
-                          "VALUES (@isbn, @title, @desciption, @amount_on_stock, @price, @author_id)";
+                          "VALUES (@Isbn, @Title, @Description, @AmountOnStock, @Price, @AuthorId)";
 
-            var parameters = new DynamicParameters();
-            parameters.Add("isbn", entity.ISBN, DbType.String);
-            parameters.Add("title", entity.Title, DbType.String);
-            parameters.Add("description", entity.Description, DbType.String);
-            parameters.Add("amount_on_stock", entity.AmountOnStock, DbType.Int32);
-            parameters.Add("price", entity.Price, DbType.Decimal);
-            parameters.Add("author_id", entity.AuthorId, DbType.Guid);
-
-            var affected = await _connection.ExecuteAsync(command, cancellationToken);
+            var affected = await _connection.ExecuteAsync(command, entity);
             return affected > 0;
         }
 
@@ -72,18 +64,11 @@ namespace BookStoreApp.DataAccess.Repositories
 
         public async Task<bool> UpdateAsync(Book entity, CancellationToken cancellationToken)
         {
-            var command = $"UPDATE {TableName} SET isbn=@isbn, title=@title, description=@desciption, " +
-                          "amount_on_stock=@amount_on_stock, price=@price, author_id=@author_id)";
+            var command = $"UPDATE {TableName} SET isbn=@Isbn, title=@Title, description=@Description, " +
+                          "amount_on_stock=@AmountOnStock, price=@Price, author_id=@AuthorId " +
+                          "WHERE id=@Id)";
 
-            var parameters = new DynamicParameters();
-            parameters.Add("isbn", entity.ISBN, DbType.String);
-            parameters.Add("title", entity.Title, DbType.String);
-            parameters.Add("description", entity.Description, DbType.String);
-            parameters.Add("amount_on_stock", entity.AmountOnStock, DbType.Int32);
-            parameters.Add("price", entity.Price, DbType.Decimal);
-            parameters.Add("author_id", entity.AuthorId, DbType.Guid);
-
-            var affected = await _connection.ExecuteAsync(command, cancellationToken);
+            var affected = await _connection.ExecuteAsync(command, entity);
             return affected > 0;
         }
     }

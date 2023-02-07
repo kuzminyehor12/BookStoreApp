@@ -21,10 +21,11 @@ namespace BookStore.Application.Books.Commands.UpdateBookCommand
         {
             var book = new Book
             {
+                Id = request.Id,
                 Title = request.Title,
                 Description = request.Description,
-                Price = request.Price,
-                AmountOnStock = request.AmountOnStock,
+                Price = request.Price ?? default,
+                AmountOnStock = request.AmountOnStock ?? default,
                 ISBN = request.ISBN,
                 AuthorId = request.AuthorId
             };

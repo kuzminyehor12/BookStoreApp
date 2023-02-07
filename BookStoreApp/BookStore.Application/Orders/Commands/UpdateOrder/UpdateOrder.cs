@@ -10,10 +10,11 @@ namespace BookStore.Application.Orders.Commands.UpdateOrder
 {
     public class UpdateOrder : IRequest<bool>
     {
-        public decimal Total { get; set; }
-        public decimal Discount { get; set; }
+        public Guid Id { get; set; }
+        public decimal? Total { get; set; }
+        public decimal? Discount { get; set; }
         public DateTime CreationDate { get; set; }
         public DateTime? ClosingDate { get; set; }
-        public OrderStatus Status { get; set; }
+        public OrderStatus? Status { get; set; }
     }
 }

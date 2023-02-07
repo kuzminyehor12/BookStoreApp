@@ -13,7 +13,7 @@ namespace BookStoreApp.DataAccess.Repositories
     public class OrderRepository : IOrderRepository
     {
         private readonly IDbConnection _connection;
-        public string TableName => "Orders";
+        public string TableName => "\"Orders\"";
         public OrderRepository(IDbConnection connection)
         {
             _connection = connection;
@@ -22,15 +22,9 @@ namespace BookStoreApp.DataAccess.Repositories
         public async Task<bool> CreateAsync(Order entity, CancellationToken cancellationToken)
         {
             var command = $"INSERT INTO {TableName}(creation_date, closing_date, total, status) " +
-                          "VALUES (@creation_date, @closing_date, @total, @status)";
+                          "VALUES (@CreationDate, @ClosingDate, @Total, @Status)";
 
-            var parameters = new DynamicParameters();
-            parameters.Add("creation_date", entity.CreationDate, DbType.DateTime);
-            parameters.Add("closing_date", entity.ClosingDate, DbType.DateTime);
-            parameters.Add("total", entity.Total, DbType.Decimal);
-            parameters.Add("status", entity.Status, DbType.Byte);
-
-            var affected = await _connection.ExecuteAsync(command, cancellationToken);
+            var affected = await _connection.ExecuteAsync(command, entity);
             return affected > 0;
         }
 
@@ -59,16 +53,10 @@ namespace BookStoreApp.DataAccess.Repositories
 
         public async Task<bool> UpdateAsync(Order entity, CancellationToken cancellationToken)
         {
-            var command = $"UPDATE {TableName} SET creation_date=@creation_date, closing_date=@closing_date," +
-                          "total=@total, status=@status)";
+            var command = $"UPDATE {TableName} SET creation_date=@CreationDate, closing_date=@ClosingDate," +
+                          "total=@Total, status=@Status) WHERE id=@Id";
 
-            var parameters = new DynamicParameters();
-            parameters.Add("creation_date", entity.CreationDate, DbType.DateTime);
-            parameters.Add("closing_date", entity.ClosingDate, DbType.DateTime);
-            parameters.Add("total", entity.Total, DbType.Decimal);
-            parameters.Add("status", entity.Status, DbType.Byte);
-
-            var affected = await _connection.ExecuteAsync(command, cancellationToken);
+            var affected = await _connection.ExecuteAsync(command, entity);
             return affected > 0;
         }
     }

@@ -21,6 +21,7 @@ namespace BookStore.Application.Authors.Commands.UpdateAuthor
         {
             var author = new Author
             {
+                Id = request.Id,
                 Surname = request.Surname,
                 Name = request.Name,
             };

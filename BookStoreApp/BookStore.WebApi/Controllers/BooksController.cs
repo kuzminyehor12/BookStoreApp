@@ -92,10 +92,11 @@ namespace BookStore.WebApi.Controllers
         }
 
         [ProducesResponseType(StatusCodes.Status200OK)]
-        [HttpPut]
-        public async Task<ActionResult> UpdateBook(BookWriteModel bookDto)
+        [HttpPut("{id}")]
+        public async Task<ActionResult> UpdateBook(Guid id, BookWriteModel bookDto)
         {
             var command = _mapper.Map<UpdateBook>(bookDto);
+            command.Id = id;
             var result = await _mediator.Send(command);
             return Ok(new { Success = result });
         }

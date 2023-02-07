@@ -9,6 +9,7 @@ namespace BookStore.Application.Authors.Commands.UpdateAuthor
 {
     public class UpdateAuthor : IRequest<bool>
     {
+        public Guid Id { get; set; }
         public string Surname { get; set; }
         public string Name { get; set; }
     }
