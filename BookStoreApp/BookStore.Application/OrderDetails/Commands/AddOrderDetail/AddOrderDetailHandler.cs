@@ -1,4 +1,5 @@
 ﻿using BookStore.Application.Common.Interfaces;
+using BookStore.Application.Common.Validation;
 using BookStore.Domain.Models;
 using MediatR;
 using System;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace BookStore.Application.OrderDetails.Commands.AddOrderDetail
 {
-    public class AddOrderDetailHandler : IRequestHandler<AddOrderDetail, bool>
+    public class AddOrderDetailHandler : IRequestHandler<AddOrderDetail, Result>
     {
         private readonly IOrderService _service;
         public AddOrderDetailHandler(IOrderService service)
@@ -17,7 +18,7 @@ namespace BookStore.Application.OrderDetails.Commands.AddOrderDetail
             _service = service;
         }
 
-        public async Task<bool> Handle(AddOrderDetail request, CancellationToken cancellationToken)
+        public async Task<Result> Handle(AddOrderDetail request, CancellationToken cancellationToken)
         {
             var detail = new OrderDetail
             {

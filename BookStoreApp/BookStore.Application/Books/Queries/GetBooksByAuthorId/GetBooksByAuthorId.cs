@@ -10,6 +10,6 @@ namespace BookStore.Application.Books.Queries.GetBooksByAuthorId
 {
     public class GetBooksByAuthorId : IRequest<IEnumerable<BookViewModel>>
     {
-        public Guid AuthorId { get; set; }
+        public Guid AuthorId { get; init; }
     }
 }

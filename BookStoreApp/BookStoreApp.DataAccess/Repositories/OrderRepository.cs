@@ -1,4 +1,6 @@
-﻿using BookStore.Domain.Models;
+﻿using BookStore.Application.Common.Validation;
+using BookStore.Domain.Enums;
+using BookStore.Domain.Models;
 using BookStore.Persistance.Interfaces;
 using Dapper;
 using System;
@@ -19,20 +21,35 @@ namespace BookStoreApp.DataAccess.Repositories
             _connection = connection;
         }
 
-        public async Task<bool> CreateAsync(Order entity, CancellationToken cancellationToken)
+        public async Task<Result> CreateAsync(Order entity, CancellationToken cancellationToken)
         {
             var command = $"INSERT INTO {TableName}(creation_date, closing_date, total, status) " +
                           "VALUES (@CreationDate, @ClosingDate, @Total, @Status)";
 
-            var affected = await _connection.ExecuteAsync(command, entity);
-            return affected > 0;
+            try
+            {
+                await _connection.ExecuteAsync(command, entity);
+                return Result.Success();
+            }
+            catch (Exception ex)
+            {
+                return Result.Failure(ex.Message);
+            }
         }
 
-        public async Task<bool> DeleteAsync(Guid id, CancellationToken cancellationToken)
+        public async Task<Result> DeleteAsync(Guid id, CancellationToken cancellationToken)
         {
             var command = $"UPDATE {TableName} SET is_deleted=true WHERE id=@Id";
-            var affected = await _connection.ExecuteAsync(command, new { Id = id });
-            return affected > 0;
+            try
+            {
+                await _connection.ExecuteAsync(command, new { Id = id });
+                return Result.Success();
+            }
+            catch (Exception ex)
+            {
+                return Result.Failure(ex.Message);
+                
+            }
         }
 
         public async Task<IEnumerable<Order>> GetAllAsync(CancellationToken cancellationToken)
@@ -51,13 +68,20 @@ namespace BookStoreApp.DataAccess.Repositories
                 "WHERE creation_date => @CreationDate AND closing_date <= @ClosingDate", new { CreationDate = startDate, ClosingDate = endDate });
         }
 
-        public async Task<bool> UpdateAsync(Order entity, CancellationToken cancellationToken)
+        public async Task<Result> UpdateAsync(Order entity, CancellationToken cancellationToken)
         {
             var command = $"UPDATE {TableName} SET creation_date=@CreationDate, closing_date=@ClosingDate," +
                           "total=@Total, status=@Status) WHERE id=@Id";
 
-            var affected = await _connection.ExecuteAsync(command, entity);
-            return affected > 0;
+            try
+            {
+                await _connection.ExecuteAsync(command, entity);
+                return Result.Success();
+            }
+            catch (Exception ex)
+            {
+                return Result.Failure(ex.Message);
+            }
         }
     }
 }

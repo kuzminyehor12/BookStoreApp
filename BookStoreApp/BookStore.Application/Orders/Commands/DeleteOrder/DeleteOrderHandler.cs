@@ -1,4 +1,5 @@
 ﻿using BookStore.Application.Common.Interfaces;
+using BookStore.Application.Common.Validation;
 using BookStore.Domain.Models;
 using MediatR;
 using System;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace BookStore.Application.Orders.Commands.DeleteOrder
 {
-    public class DeleteOrderHandler : IRequestHandler<DeleteOrder, bool>
+    public class DeleteOrderHandler : IRequestHandler<DeleteOrder, Result>
     {
         private readonly IOrderService _service;
         public DeleteOrderHandler(IOrderService service)
@@ -17,7 +18,7 @@ namespace BookStore.Application.Orders.Commands.DeleteOrder
             _service = service;
         }
 
-        public async Task<bool> Handle(DeleteOrder request, CancellationToken cancellationToken)
+        public async Task<Result> Handle(DeleteOrder request, CancellationToken cancellationToken)
         {
             return await _service.DeleteAsync(request.Id, cancellationToken);
         }

@@ -18,6 +18,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace BookStore.WebApi.Controllers
 {
+    [FailureResultFilter]
     [BookStoreExceptionFilter]
     [Route("api/[controller]")]
     [ApiController]
@@ -82,7 +83,7 @@ namespace BookStore.WebApi.Controllers
         {
             var command = _mapper.Map<CreateOrder>(orderDto);
             var result = await _mediator.Send(command);
-            return CreatedAtAction(nameof(CreateOrder), new { Success = result });
+            return CreatedAtAction(nameof(CreateOrder), result);
         }
 
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -93,7 +94,7 @@ namespace BookStore.WebApi.Controllers
             var command = _mapper.Map<UpdateOrder>(orderDto);
             command.Id = id;
             var result = await _mediator.Send(command);
-            return Ok(new { Success = result });
+            return Ok(result);
         }
 
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -105,7 +106,7 @@ namespace BookStore.WebApi.Controllers
                 Id = id
             };
             var result = await _mediator.Send(command);
-            return Ok(new { Success = result });
+            return Ok(result);
         }
 
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -115,7 +116,7 @@ namespace BookStore.WebApi.Controllers
         {
             var command = _mapper.Map<AddOrderDetail>(detailDto);
             var result = await _mediator.Send(command);
-            return CreatedAtAction(nameof(AddOrderDetail), new { Success = result });
+            return CreatedAtAction(nameof(AddOrderDetail), result);
         }
 
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -127,7 +128,7 @@ namespace BookStore.WebApi.Controllers
                 Id = detailId 
             };
             var result = await _mediator.Send(command);
-            return Ok(new { Success = result });
+            return Ok(result);
         }
 
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -141,7 +142,7 @@ namespace BookStore.WebApi.Controllers
                 Amount = newAmountModel.NewAmount
             };
             var result = await _mediator.Send(command);
-            return Ok(new { Success = result });
+            return Ok(result);
         }
     }
 }

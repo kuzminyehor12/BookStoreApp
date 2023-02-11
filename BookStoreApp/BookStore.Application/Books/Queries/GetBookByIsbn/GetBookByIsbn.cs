@@ -10,6 +10,6 @@ namespace BookStore.Application.Books.Queries.GetBookByIsbn
 {
     public class GetBookByIsbn : IRequest<BookViewModel>
     {
-        public string Isbn { get; set; }
+        public string Isbn { get; init; }
     }
 }

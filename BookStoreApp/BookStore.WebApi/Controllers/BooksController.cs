@@ -18,6 +18,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace BookStore.WebApi.Controllers
 {
+    [FailureResultFilter]
     [BookStoreExceptionFilter]
     [Route("api/[controller]")]
     [ApiController]
@@ -93,7 +94,7 @@ namespace BookStore.WebApi.Controllers
         {
             var command = _mapper.Map<CreateBook>(bookDto);
             var result = await _mediator.Send(command);
-            return CreatedAtAction(nameof(CreateBook), new { Success = result });
+            return CreatedAtAction(nameof(CreateBook), result);
         }
 
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -104,7 +105,7 @@ namespace BookStore.WebApi.Controllers
             var command = _mapper.Map<UpdateBook>(bookDto);
             command.Id = id;
             var result = await _mediator.Send(command);
-            return Ok(new { Success = result });
+            return Ok(result);
         }
 
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -116,7 +117,7 @@ namespace BookStore.WebApi.Controllers
                 Id = id
             };
             var result = await _mediator.Send(command);
-            return Ok(new { Success = result });
+            return Ok(result);
         }
 
         [ProducesResponseType(typeof(IEnumerable<OrderDetailViewModel>), StatusCodes.Status200OK)]

@@ -1,4 +1,6 @@
-﻿using BookStore.Domain.Models;
+﻿using BookStore.Application.Common.Validation;
+using BookStore.Domain.Enums;
+using BookStore.Domain.Models;
 using BookStore.Persistance.Interfaces;
 using Dapper;
 using System;
@@ -18,22 +20,37 @@ namespace BookStoreApp.DataAccess.Repositories
         {
             _connection = connection;
         }
-        public async Task<bool> CreateAsync(OrderDetail entity, CancellationToken cancellationToken)
+        public async Task<Result> CreateAsync(OrderDetail entity, CancellationToken cancellationToken)
         {
             var command = $"INSERT INTO {TableName}(book_id, order_id, amount) " +
                         "VALUES (@BookId, @OrderId, @Amount)";
 
-            var affected = await _connection.ExecuteAsync(command, entity);
-            return affected > 0;
+            try
+            {
+                await _connection.ExecuteAsync(command, entity);
+                return Result.Success();
+            }
+            catch (Exception ex)
+            {
+                return Result.Failure(ex.Message);
+            }
+            
         }
 
-        public async Task<bool> DeleteAsync(Guid id, CancellationToken cancellationToken)
+        public async Task<Result> DeleteAsync(Guid id, CancellationToken cancellationToken)
         {
             var command = $"DELETE FROM {TableName}" +
                            "WHERE id=@Id";
 
-            var affected = await _connection.ExecuteAsync(command, new { Id = id });
-            return affected > 0;
+            try
+            {
+                await _connection.ExecuteAsync(command, new { Id = id });
+                return Result.Success();
+            }
+            catch (Exception ex)
+            {
+                return Result.Failure(ex.Message);
+            }
         }
 
         public async Task<IEnumerable<OrderDetail>> GetAllAsync(CancellationToken cancellationToken)
@@ -51,12 +68,20 @@ namespace BookStoreApp.DataAccess.Repositories
             return await _connection.QueryAsync<OrderDetail>($"SELECT * FROM {TableName} WHERE order_id=@OrderId", new { OrderId = orderId });
         }
 
-        public async Task<bool> UpdateAsync(OrderDetail entity, CancellationToken cancellationToken)
+        public async Task<Result> UpdateAsync(OrderDetail entity, CancellationToken cancellationToken)
         {
             var command = $"UPDATE {TableName} SET book_id=@BookId, order_id=@OrderId, amount=@Amount " +
                            "WHERE id=@Id";
-            var affected = await _connection.ExecuteAsync(command, entity);
-            return affected > 0;
+
+            try
+            {
+                await _connection.ExecuteAsync(command, entity);
+                return Result.Success();
+            }
+            catch (Exception ex)
+            {
+                return Result.Failure(ex.Message);
+            }
         }
 
         public async Task<IEnumerable<OrderDetail>> GetOrderDetailsByBookId(Guid bookId, CancellationToken cancellationToken)

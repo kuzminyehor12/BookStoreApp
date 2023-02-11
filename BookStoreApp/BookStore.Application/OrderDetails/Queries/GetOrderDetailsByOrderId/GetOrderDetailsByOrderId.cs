@@ -10,6 +10,6 @@ namespace BookStore.Application.OrderDetails.Queries.GetOrderDetailsByOrderId
 {
     public class GetOrderDetailsByOrderId : IRequest<IEnumerable<OrderDetailViewModel>>
     {
-        public Guid OrderId { get; set; }
+        public Guid OrderId { get; init; }
     }
 }

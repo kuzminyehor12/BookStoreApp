@@ -1,4 +1,5 @@
 ﻿using BookStore.Application.Common.Interfaces;
+using BookStore.Application.Common.Validation;
 using BookStore.Domain.Models;
 using MediatR;
 using System;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace BookStore.Application.Authors.Commands.CreateAuthor
 {
-    public class CreateAuthorHandler : IRequestHandler<CreateAuthor, bool>
+    public class CreateAuthorHandler : IRequestHandler<CreateAuthor, Result>
     {
         private readonly IAuthorService _service;
         public CreateAuthorHandler(IAuthorService service)
@@ -17,7 +18,7 @@ namespace BookStore.Application.Authors.Commands.CreateAuthor
             _service = service;
         }
 
-        public async Task<bool> Handle(CreateAuthor request, CancellationToken cancellationToken)
+        public async Task<Result> Handle(CreateAuthor request, CancellationToken cancellationToken)
         {
             var author = new Author
             {

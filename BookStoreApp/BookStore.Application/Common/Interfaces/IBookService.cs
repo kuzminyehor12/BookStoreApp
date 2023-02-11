@@ -10,8 +10,8 @@ namespace BookStore.Application.Common.Interfaces
 {
     public interface IBookService : IService<Book, BookViewModel>
     {
-        Task<BookViewModel> GetByIsbnAsync(string isbn, CancellationToken cancellationToken);
-        Task<IEnumerable<BookViewModel>> GetByTitleAsync(string title, CancellationToken cancellationToken);
-        Task<IEnumerable<BookViewModel>> GetByAuthorIdAsync(Guid authorId, CancellationToken cancellationToken);
+        Task<BookViewModel> GetByIsbnAsync(string isbn, CancellationToken cancellationToken = default);
+        Task<IEnumerable<BookViewModel>> GetByTitleAsync(string title, CancellationToken cancellationToken = default);
+        Task<IEnumerable<BookViewModel>> GetByAuthorIdAsync(Guid authorId, CancellationToken cancellationToken = default);
     }
 }

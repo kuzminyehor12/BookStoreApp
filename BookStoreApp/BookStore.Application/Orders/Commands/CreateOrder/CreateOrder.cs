@@ -1,4 +1,5 @@
-﻿using BookStore.Domain.Enums;
+﻿using BookStore.Application.Common.Validation;
+using BookStore.Domain.Enums;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -8,10 +9,10 @@ using System.Threading.Tasks;
 
 namespace BookStore.Application.Orders.Commands.CreateOrder
 {
-    public class CreateOrder : IRequest<bool>
+    public class CreateOrder : IRequest<Result>
     {
-        public decimal? Total { get; set; }
-        public decimal? Discount { get; set; }
-        public DateTime CreationDate { get; set; }
+        public decimal? Total { get; init; }
+        public decimal? Discount { get; init; }
+        public DateTime CreationDate { get; init; }
     }
 }

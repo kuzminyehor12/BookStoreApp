@@ -1,4 +1,5 @@
 ﻿using BookStore.Application.Common.Interfaces;
+using BookStore.Application.Common.Validation;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace BookStore.Application.OrderDetails.Commands.RemoveOrderDetail
 {
-    public class RemoveOrderDetailHandler : IRequestHandler<RemoveOrderDetail, bool>
+    public class RemoveOrderDetailHandler : IRequestHandler<RemoveOrderDetail, Result>
     {
         private readonly IOrderService _service;
         public RemoveOrderDetailHandler(IOrderService service)
@@ -16,7 +17,7 @@ namespace BookStore.Application.OrderDetails.Commands.RemoveOrderDetail
             _service = service;
         }
 
-        public async Task<bool> Handle(RemoveOrderDetail request, CancellationToken cancellationToken)
+        public async Task<Result> Handle(RemoveOrderDetail request, CancellationToken cancellationToken)
         {
             return await _service.RemoveDetailAsync(request.Id, cancellationToken);
         }

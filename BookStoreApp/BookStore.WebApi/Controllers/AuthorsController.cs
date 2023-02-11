@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace BookStore.WebApi.Controllers
 {
+    [FailureResultFilter]
     [BookStoreExceptionFilter]
     [Route("api/[controller]")]
     [ApiController]
@@ -52,7 +53,7 @@ namespace BookStore.WebApi.Controllers
         {
             var command = _mapper.Map<CreateAuthor>(authorDto);
             var result = await _mediator.Send(command);
-            return CreatedAtAction(nameof(CreateAuthor), new { Success = result });
+            return CreatedAtAction(nameof(CreateAuthor), result);
         }
 
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -63,7 +64,7 @@ namespace BookStore.WebApi.Controllers
             var command = _mapper.Map<UpdateAuthor>(authorDto);
             command.Id = id;
             var result = await _mediator.Send(command);
-            return Ok(new { Success = result });
+            return Ok(result);
         }
 
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -75,7 +76,7 @@ namespace BookStore.WebApi.Controllers
                 Id = id
             };
             var result = await _mediator.Send(command);
-            return Ok(new { Success = result });
+            return Ok(result);
         }
     }
 }

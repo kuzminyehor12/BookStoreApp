@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using BookStore.Application.Common.Validation;
+using MediatR;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,13 +8,13 @@ using System.Threading.Tasks;
 
 namespace BookStore.Application.Books.Commands.CreateBook
 {
-    public class CreateBook : IRequest<bool>
+    public class CreateBook : IRequest<Result>
     {
-        public string ISBN { get; set; }
-        public string Title { get; set; }
-        public string Description { get; set; }
-        public int? AmountOnStock { get; set; }
-        public decimal? Price { get; set; }
-        public Guid? AuthorId { get; set; }
+        public string ISBN { get; init; }
+        public string Title { get; init; }
+        public string Description { get; init; }
+        public int? AmountOnStock { get; init; }
+        public decimal? Price { get; init; }
+        public Guid? AuthorId { get; init; }
     }
 }

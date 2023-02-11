@@ -10,6 +10,6 @@ namespace BookStore.Application.Books.Queries.GetBookByIdQuery
 {
     public class GetBookById : IRequest<BookViewModel>
     {
-        public Guid Id { get; set; }
+        public Guid Id { get; init; }
     }
 }

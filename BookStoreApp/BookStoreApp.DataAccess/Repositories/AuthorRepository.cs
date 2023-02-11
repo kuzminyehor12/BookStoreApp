@@ -1,4 +1,6 @@
-﻿using BookStore.Domain.Models;
+﻿using BookStore.Application.Common.Validation;
+using BookStore.Domain.Enums;
+using BookStore.Domain.Models;
 using BookStore.Persistance.Interfaces;
 using Dapper;
 using System;
@@ -20,22 +22,36 @@ namespace BookStoreApp.DataAccess.Repositories
             _connection = connection;
         }
 
-        public async Task<bool> CreateAsync(Author entity, CancellationToken cancellationToken)
+        public async Task<Result> CreateAsync(Author entity, CancellationToken cancellationToken)
         {
             var command = $"INSERT INTO {TableName}(name, surname) " +
                          "VALUES (@Name, @Surname)";;
 
-            var affected = await _connection.ExecuteAsync(command, entity);
-            return affected > 0;
+            try
+            {
+                await _connection.ExecuteAsync(command, entity);
+                return Result.Success();
+            }
+            catch (Exception ex)
+            {
+                return Result.Failure(ex.Message);
+            }
         }
 
-        public async Task<bool> DeleteAsync(Guid id, CancellationToken cancellationToken)
+        public async Task<Result> DeleteAsync(Guid id, CancellationToken cancellationToken)
         {
             var command = $"DELETE FROM {TableName}" +
                         "WHERE id=@Id";
 
-            var affected = await _connection.ExecuteAsync(command, new { Id = id });
-            return affected > 0;
+            try
+            {
+                await _connection.ExecuteAsync(command, new { Id = id });
+                return Result.Success();
+            }
+            catch (Exception ex)
+            {
+                return Result.Failure(ex.Message);
+            }
         }
 
         public async Task<IEnumerable<Author>> GetAllAsync(CancellationToken cancellationToken)
@@ -48,12 +64,19 @@ namespace BookStoreApp.DataAccess.Repositories
             return await _connection.QueryFirstOrDefaultAsync<Author>($"SELECT * FROM {TableName} WHERE id=@Id", new { Id = id });
         }
 
-        public async Task<bool> UpdateAsync(Author entity, CancellationToken cancellationToken)
+        public async Task<Result> UpdateAsync(Author entity, CancellationToken cancellationToken)
         {
             var command = $"UPDATE {TableName} SET name=@Name, surname=@Surname " +
                            "WHERE id=@Id";
-            var affected = await _connection.ExecuteAsync(command, entity);
-            return affected > 0;
+            try
+            {
+                await _connection.ExecuteAsync(command, entity);
+                return Result.Success();
+            }
+            catch (Exception ex)
+            {
+                return Result.Failure(ex.Message);
+            }
         }
     }
 }

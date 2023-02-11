@@ -1,18 +1,19 @@
 ﻿using BookStore.Application.Common.Interfaces;
+using BookStore.Application.Common.Validation;
 using BookStore.Application.Common.ViewModels;
 using BookStore.Domain.Models;
 using MediatR;
 
 namespace BookStore.Application.Books.Commands.CreateBook
 { 
-    public class CreateBookHandler : IRequestHandler<CreateBook, bool>
+    public class CreateBookHandler : IRequestHandler<CreateBook, Result>
     {
         private readonly IBookService _service;
         public CreateBookHandler(IBookService service)
         {
             _service = service;
         }
-        public async Task<bool> Handle(CreateBook request, CancellationToken cancellationToken)
+        public async Task<Result> Handle(CreateBook request, CancellationToken cancellationToken)
         {
             var book = new Book
             {

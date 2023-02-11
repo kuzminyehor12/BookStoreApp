@@ -1,4 +1,5 @@
-﻿using BookStore.Domain.Models;
+﻿using BookStore.Application.Common.Validation;
+using BookStore.Domain.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,10 +12,10 @@ namespace BookStore.Application.Common.Interfaces
            where TModel : BaseModel 
            where TViewModel : IMapWith<TModel>
     {
-        Task<IEnumerable<TViewModel>> GetAllAsync(CancellationToken cancellationToken);
-        Task<TViewModel> GetByIdAsync(Guid id, CancellationToken cancellationToken);
-        Task<bool> CreateAsync(TModel model, CancellationToken cancellationToken);
-        Task<bool> UpdateAsync(TModel model, CancellationToken cancellationToken);
-        Task<bool> DeleteAsync(Guid id, CancellationToken cancellationToken);
+        Task<IEnumerable<TViewModel>> GetAllAsync(CancellationToken cancellationToken = default);
+        Task<TViewModel> GetByIdAsync(Guid id, CancellationToken cancellationToken = default);
+        Task<Result> CreateAsync(TModel model, CancellationToken cancellationToken = default);
+        Task<Result> UpdateAsync(TModel model, CancellationToken cancellationToken = default);
+        Task<Result> DeleteAsync(Guid id, CancellationToken cancellationToken = default);
     }
 }

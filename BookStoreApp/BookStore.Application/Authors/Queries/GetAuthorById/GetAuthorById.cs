@@ -10,6 +10,6 @@ namespace BookStore.Application.Authors.Queries.GetAuthorById
 {
     public class GetAuthorById : IRequest<AuthorViewModel>
     {
-        public Guid Id { get; set; }
+        public Guid Id { get; init; }
     }
 }

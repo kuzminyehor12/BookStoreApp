@@ -1,8 +1,11 @@
 using BookStore.Application.Common.Interfaces;
 using BookStore.Application.Common.Mappings;
+using BookStore.WebApi.Configurations;
 using BookStore.WebApi.Extensions;
 using FluentValidation;
+using MassTransit;
 using MediatR;
+using Microsoft.Extensions.Options;
 using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -10,6 +13,8 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddDatabase(builder.Configuration);
 builder.Services.AddMediatR(typeof(IService<,>).Assembly);
+builder.Services.Configure<MessageBrokerSettings>(builder.Configuration.GetSection("MessageBrokerSettings"));
+builder.Services.AddSingleton(provider => provider.GetRequiredService<IOptions<MessageBrokerSettings>>().Value);
 
 builder.Services.AddAutoMapper(options =>
 {
@@ -21,6 +26,19 @@ builder.Services.AddRepositories();
 builder.Services.AddBusiness();
 builder.Services.AddPipelines();
 builder.Services.AddValidatorsFromAssembly(typeof(IService<,>).Assembly, includeInternalTypes: true);
+builder.Services.AddMassTransit(options =>
+{
+    options.SetKebabCaseEndpointNameFormatter();
+    options.UsingRabbitMq((context, configurator) =>
+    {
+        var settings = context.GetRequiredService<MessageBrokerSettings>();
+        configurator.Host(new Uri(settings.Host), host =>
+        {
+            host.Username(settings.Username);
+            host.Password(settings.Password);
+        });
+    });
+});
 
 builder.Services.AddCors(options =>
 {

@@ -1,4 +1,5 @@
 ﻿using BookStore.Application.Common.Interfaces;
+using BookStore.Application.Common.Validation;
 using BookStore.Domain.Models;
 using MediatR;
 using System;
@@ -9,14 +10,14 @@ using System.Threading.Tasks;
 
 namespace BookStore.Application.Books.Commands.UpdateBook
 {
-    internal class UpdateBookHandler : IRequestHandler<UpdateBook, bool>
+    internal class UpdateBookHandler : IRequestHandler<UpdateBook, Result>
     {
         private readonly IBookService _service;
         public UpdateBookHandler(IBookService service)
         {
             _service = service;
         }
-        public async Task<bool> Handle(UpdateBook request, CancellationToken cancellationToken)
+        public async Task<Result> Handle(UpdateBook request, CancellationToken cancellationToken)
         {
             var book = new Book
             {

@@ -1,4 +1,5 @@
 ﻿using BookStore.Application.Common.Interfaces;
+using BookStore.Application.Common.Validation;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace BookStore.Application.Authors.Commands.DeleteAuthor
 {
-    public class DeleteAuthorHandler : IRequestHandler<DeleteAuthor, bool>
+    public class DeleteAuthorHandler : IRequestHandler<DeleteAuthor, Result>
     {
         private readonly IAuthorService _service;
         public DeleteAuthorHandler(IAuthorService service)
@@ -16,7 +17,7 @@ namespace BookStore.Application.Authors.Commands.DeleteAuthor
             _service = service;
         }
 
-        public async Task<bool> Handle(DeleteAuthor request, CancellationToken cancellationToken)
+        public async Task<Result> Handle(DeleteAuthor request, CancellationToken cancellationToken)
         {
             return await _service.DeleteAsync(request.Id, cancellationToken);
         }

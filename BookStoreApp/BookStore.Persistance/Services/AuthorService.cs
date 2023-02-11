@@ -1,5 +1,10 @@
 ﻿using AutoMapper;
+using BookStore.Application.Authors.Commands.CreateAuthor;
+using BookStore.Application.Authors.Commands.DeleteAuthor;
+using BookStore.Application.Authors.Commands.UpdateAuthor;
 using BookStore.Application.Common.Interfaces;
+using BookStore.Application.Common.Messaging;
+using BookStore.Application.Common.Validation;
 using BookStore.Application.Common.ViewModels;
 using BookStore.Domain.Models;
 using BookStore.Persistance.Interfaces;
@@ -16,35 +21,64 @@ namespace BookStore.Persistance.Services
     {
         private readonly IAuthorRepository _authorRepository;
         private readonly IMapper _mapper;
-        public AuthorService(IAuthorRepository authorRepository, IMapper mapper)
+        private readonly IEventBus _eventBus;
+        public AuthorService(
+            IAuthorRepository authorRepository, 
+            IMapper mapper,
+            IEventBus eventBus)
         {
             _authorRepository = authorRepository;
             _mapper = mapper;
+            _eventBus = eventBus;
         }
 
-        public async Task<bool> CreateAsync(Author model, CancellationToken cancellationToken)
+        public async Task<Result> CreateAsync(Author model, CancellationToken cancellationToken = default)
         {
-            return await _authorRepository.CreateAsync(model, cancellationToken);
+            var result = await _authorRepository.CreateAsync(model, cancellationToken);
+
+            await _eventBus.PublishAsync(new CreateAuthorEvent
+            {
+                Name = model.Name,
+                Surname = model.Surname
+            }, cancellationToken);
+            
+            return result;
         }
 
-        public async Task<bool> DeleteAsync(Guid id, CancellationToken cancellationToken)
+        public async Task<Result> DeleteAsync(Guid id, CancellationToken cancellationToken = default)
         {
-            return await _authorRepository.DeleteAsync(id, cancellationToken);
+           var result = await _authorRepository.DeleteAsync(id, cancellationToken);
+            
+           await _eventBus.PublishAsync(new DeleteAuthorEvent
+           {
+               Id = id
+           }, cancellationToken);
+            
+           return result;
         }
 
-        public async Task<bool> UpdateAsync(Author model, CancellationToken cancellationToken)
+        public async Task<Result> UpdateAsync(Author model, CancellationToken cancellationToken = default)
         {
-            return await _authorRepository.UpdateAsync(model, cancellationToken);
+            var result = await _authorRepository.UpdateAsync(model, cancellationToken);
+
+            await _eventBus.PublishAsync(new UpdateAuthorEvent
+            {
+                Id = model.Id,
+                Surname = model.Surname,
+                Name = model.Name
+            }, cancellationToken);
+            
+            return result;
         }
 
 
-        public async Task<IEnumerable<AuthorViewModel>> GetAllAsync(CancellationToken cancellationToken)
+        public async Task<IEnumerable<AuthorViewModel>> GetAllAsync(CancellationToken cancellationToken = default)
         {
             var entities = await _authorRepository.GetAllAsync(cancellationToken);
             return _mapper.Map<IEnumerable<AuthorViewModel>>(entities);
         }
 
-        public async Task<AuthorViewModel> GetByIdAsync(Guid id, CancellationToken cancellationToken)
+        public async Task<AuthorViewModel> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
         {
             var entity = await _authorRepository.GetByIdAsync(id, cancellationToken);
 

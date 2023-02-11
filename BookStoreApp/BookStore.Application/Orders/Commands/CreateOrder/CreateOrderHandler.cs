@@ -1,4 +1,5 @@
 ﻿using BookStore.Application.Common.Interfaces;
+using BookStore.Application.Common.Validation;
 using BookStore.Domain.Enums;
 using BookStore.Domain.Models;
 using MediatR;
@@ -10,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace BookStore.Application.Orders.Commands.CreateOrder
 {
-    public class CreateOrderHandler : IRequestHandler<CreateOrder, bool>
+    public class CreateOrderHandler : IRequestHandler<CreateOrder, Result>
     {
         private IOrderService _service;
         public CreateOrderHandler(IOrderService service)
@@ -18,7 +19,7 @@ namespace BookStore.Application.Orders.Commands.CreateOrder
             _service = service;
         }
 
-        public async Task<bool> Handle(CreateOrder request, CancellationToken cancellationToken)
+        public async Task<Result> Handle(CreateOrder request, CancellationToken cancellationToken)
         {
             var order = new Order
             {

@@ -10,6 +10,6 @@ namespace BookStore.Application.Books.Queries.GetBooksByTitle
 {
     public class GetBooksByTitle : IRequest<IEnumerable<BookViewModel>>
     {
-        public string Title { get; set; }
+        public string Title { get; init; }
     }
 }
