@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using BookStore.Application.Interfaces;
-using BookStore.Application.ViewModels;
+using BookStore.Application.Common.Interfaces;
+using BookStore.Application.Common.ViewModels;
 using BookStore.Domain.Models;
 using BookStore.Persistance.Interfaces;
 using BookStore.Persistance.Validation;

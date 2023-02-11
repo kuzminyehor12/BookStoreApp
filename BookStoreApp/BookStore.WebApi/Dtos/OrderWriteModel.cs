@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using BookStore.Application.Interfaces;
+using BookStore.Application.Common.Interfaces;
 using BookStore.Application.Orders.Commands.CreateOrder;
 using BookStore.Application.Orders.Commands.UpdateOrder;
 

@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using BookStore.Application.Authors.Commands.CreateAuthor;
 using BookStore.Application.Authors.Commands.UpdateAuthor;
-using BookStore.Application.Interfaces;
+using BookStore.Application.Common.Interfaces;
 
 namespace BookStore.WebApi.Dtos
 {

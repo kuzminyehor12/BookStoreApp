@@ -1,4 +1,4 @@
-﻿using BookStore.Application.Interfaces;
+﻿using BookStore.Application.Common.Interfaces;
 using MediatR;
 using System;
 using System.Collections.Generic;

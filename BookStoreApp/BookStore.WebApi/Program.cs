@@ -1,6 +1,7 @@
+using BookStore.Application.Common.Interfaces;
 using BookStore.Application.Common.Mappings;
-using BookStore.Application.Interfaces;
 using BookStore.WebApi.Extensions;
+using FluentValidation;
 using MediatR;
 using System.Reflection;
 
@@ -18,6 +19,8 @@ builder.Services.AddAutoMapper(options =>
 
 builder.Services.AddRepositories();
 builder.Services.AddBusiness();
+builder.Services.AddPipelines();
+builder.Services.AddValidatorsFromAssembly(typeof(IService<,>).Assembly, includeInternalTypes: true);
 
 builder.Services.AddCors(options =>
 {

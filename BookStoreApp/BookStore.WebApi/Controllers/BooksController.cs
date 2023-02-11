@@ -1,22 +1,24 @@
 ﻿using AutoMapper;
-using BookStore.Application.Books.Commands.CreateBookCommand;
+using BookStore.Application.Books.Commands.CreateBook;
 using BookStore.Application.Books.Commands.DeleteBookCommand;
-using BookStore.Application.Books.Commands.UpdateBookCommand;
+using BookStore.Application.Books.Commands.UpdateBook;
 using BookStore.Application.Books.Queries.GetAllBooksQuery;
 using BookStore.Application.Books.Queries.GetBookByIdQuery;
 using BookStore.Application.Books.Queries.GetBookByIsbn;
 using BookStore.Application.Books.Queries.GetBooksByAuthorId;
 using BookStore.Application.Books.Queries.GetBooksByTitle;
+using BookStore.Application.Common.ViewModels;
 using BookStore.Application.OrderDetails.Queries.GetOrderDetailsByBookId;
 using BookStore.Application.OrderDetails.Queries.GetOrderDetailsByOrderId;
-using BookStore.Application.ViewModels;
 using BookStore.WebApi.Dtos;
+using BookStore.WebApi.Filters;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BookStore.WebApi.Controllers
 {
+    [BookStoreExceptionFilter]
     [Route("api/[controller]")]
     [ApiController]
     public class BooksController : BaseController
@@ -34,6 +36,7 @@ namespace BookStore.WebApi.Controllers
             return Ok(books);
         }
 
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(BookViewModel), StatusCodes.Status200OK)]
         [HttpGet("{id}")]
         public async Task<ActionResult<BookViewModel>> GetBookById(Guid id)
@@ -46,6 +49,7 @@ namespace BookStore.WebApi.Controllers
             return Ok(book);
         }
 
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(BookViewModel), StatusCodes.Status200OK)]
         [HttpGet("{isbn}")]
         public async Task<ActionResult<BookViewModel>> GetBookByIsbn(string isbn)
@@ -82,6 +86,7 @@ namespace BookStore.WebApi.Controllers
             return Ok(books);
         }
 
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [HttpPost]
         public async Task<ActionResult> CreateBook(BookWriteModel bookDto)
@@ -91,6 +96,7 @@ namespace BookStore.WebApi.Controllers
             return CreatedAtAction(nameof(CreateBook), new { Success = result });
         }
 
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [HttpPut("{id}")]
         public async Task<ActionResult> UpdateBook(Guid id, BookWriteModel bookDto)
@@ -115,7 +121,7 @@ namespace BookStore.WebApi.Controllers
 
         [ProducesResponseType(typeof(IEnumerable<OrderDetailViewModel>), StatusCodes.Status200OK)]
         [HttpGet("{bookId}/details")]
-        public async Task<ActionResult<IEnumerable<OrderDetailViewModel>>> GetOrderDetailsByOrderId(Guid bookId)
+        public async Task<ActionResult<IEnumerable<OrderDetailViewModel>>> GetOrderDetailsByBookId(Guid bookId)
         {
             var query = new GetOrderDetailsByBookId
             {

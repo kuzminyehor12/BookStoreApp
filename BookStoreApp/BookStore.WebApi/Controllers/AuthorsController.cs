@@ -4,14 +4,16 @@ using BookStore.Application.Authors.Commands.DeleteAuthor;
 using BookStore.Application.Authors.Commands.UpdateAuthor;
 using BookStore.Application.Authors.Queries.GetAllAuthors;
 using BookStore.Application.Authors.Queries.GetAuthorById;
-using BookStore.Application.ViewModels;
+using BookStore.Application.Common.ViewModels;
 using BookStore.WebApi.Dtos;
+using BookStore.WebApi.Filters;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BookStore.WebApi.Controllers
 {
+    [BookStoreExceptionFilter]
     [Route("api/[controller]")]
     [ApiController]
     public class AuthorsController : BaseController
@@ -31,6 +33,7 @@ namespace BookStore.WebApi.Controllers
         }
 
         [ProducesResponseType(typeof(AuthorViewModel), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [HttpGet("{id}")]
         public async Task<ActionResult<AuthorViewModel>> GetAuthorById(Guid id)
         {
@@ -43,6 +46,7 @@ namespace BookStore.WebApi.Controllers
         }
 
         [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [HttpPost]
         public async Task<ActionResult> CreateAuthor(AuthorWriteModel authorDto)
         {
@@ -52,6 +56,7 @@ namespace BookStore.WebApi.Controllers
         }
 
         [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [HttpPut("{id}")]
         public async Task<ActionResult> UpdateAuthor(Guid id, AuthorWriteModel authorDto)
         {

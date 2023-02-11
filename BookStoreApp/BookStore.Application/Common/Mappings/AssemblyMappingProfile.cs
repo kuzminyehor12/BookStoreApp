@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using BookStore.Application.Interfaces;
+using BookStore.Application.Common.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;

@@ -1,5 +1,5 @@
-﻿using BookStore.Application.Interfaces;
-using BookStore.Application.ViewModels;
+﻿using BookStore.Application.Common.Interfaces;
+using BookStore.Application.Common.ViewModels;
 using BookStore.Domain.Models;
 using MediatR;
 using System;

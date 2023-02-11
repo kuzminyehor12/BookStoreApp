@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BookStore.Application.Books.Commands.CreateBookCommand
+namespace BookStore.Application.Books.Commands.CreateBook
 {
     public class CreateBook : IRequest<bool>
     {

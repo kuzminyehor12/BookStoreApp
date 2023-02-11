@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BookStore.Application.Interfaces
+namespace BookStore.Application.Common.Interfaces
 {
     public interface IMapWith<TSource>
     {

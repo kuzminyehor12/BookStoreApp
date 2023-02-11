@@ -1,4 +1,4 @@
-﻿using BookStore.Application.Interfaces;
+﻿using BookStore.Application.Common.Interfaces;
 using BookStore.Domain.Enums;
 using BookStore.Domain.Models;
 using MediatR;

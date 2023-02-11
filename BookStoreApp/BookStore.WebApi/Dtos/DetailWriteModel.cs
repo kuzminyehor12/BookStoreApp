@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
-using BookStore.Application.Interfaces;
+using BookStore.Application.Common.Interfaces;
 using BookStore.Application.OrderDetails.Commands.AddOrderDetail;
-using BookStore.Application.ViewModels;
+using BookStore.Application.Common.ViewModels;
 using BookStore.Domain.Models;
 
 namespace BookStore.WebApi.Dtos

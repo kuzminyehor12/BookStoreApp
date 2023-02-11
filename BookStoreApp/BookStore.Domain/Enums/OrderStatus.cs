@@ -10,6 +10,7 @@ namespace BookStore.Domain.Enums
     {
         Open = 0,
         Paid = 1,
-        Shipped = 2
+        Shipped = 2,
+        Canceled = 3
     }
 }

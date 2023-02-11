@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using BookStore.Application.Interfaces;
+using BookStore.Application.Common.Interfaces;
 using BookStore.Domain.Models;
 using System;
 using System.Collections.Generic;
@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BookStore.Application.ViewModels
+namespace BookStore.Application.Common.ViewModels
 {
     public class BookViewModel : IMapWith<Book>
     {

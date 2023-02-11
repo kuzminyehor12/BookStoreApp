@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using BookStore.Application.Interfaces;
-using BookStore.Application.ViewModels;
+using BookStore.Application.Common.Interfaces;
+using BookStore.Application.Common.ViewModels;
 using BookStore.Domain.Models;
 using BookStore.Persistance.Interfaces;
 using BookStore.Persistance.Validation;
@@ -121,14 +121,20 @@ namespace BookStore.Persistance.Services
 
         public async Task<IEnumerable<OrderDetailViewModel>> GetDetailsByBookIdAsync(Guid bookId, CancellationToken cancellationToken)
         {
-            var books = await _bookRepository.GetAllAsync(cancellationToken);
+            var book = await _bookRepository.GetByIdAsync(bookId, cancellationToken);
+
+            if (book is null)
+            {
+                throw new BookStoreException("Entity not found");
+            }
+
             var details = await _detailRepository.GetOrderDetailsByBookId(bookId, cancellationToken);
             var viewModels = _mapper.Map<IEnumerable<OrderDetailViewModel>>(details);
 
             foreach (var detail in viewModels)
             {
-                detail.BookName = books.FirstOrDefault(b => details.Any(d => d.BookId == b.Id))?.Title;
-                detail.BookPrice = books.FirstOrDefault(b => details.Any(d => d.BookId == b.Id))?.Price ?? default;
+                detail.BookName = book.Title ?? default;
+                detail.BookPrice = book.Price;
             }
 
             return viewModels;

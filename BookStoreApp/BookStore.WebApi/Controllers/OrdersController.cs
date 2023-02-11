@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using BookStore.Application.Common.ViewModels;
 using BookStore.Application.OrderDetails.Commands.AddOrderDetail;
 using BookStore.Application.OrderDetails.Commands.ChangeOrderDetailAmount;
 using BookStore.Application.OrderDetails.Commands.RemoveOrderDetail;
@@ -9,14 +10,15 @@ using BookStore.Application.Orders.Commands.UpdateOrder;
 using BookStore.Application.Orders.Queries.GetAllOrders;
 using BookStore.Application.Orders.Queries.GetOrderById;
 using BookStore.Application.Orders.Queries.GetOrdersInDateRange;
-using BookStore.Application.ViewModels;
 using BookStore.WebApi.Dtos;
+using BookStore.WebApi.Filters;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BookStore.WebApi.Controllers
 {
+    [BookStoreExceptionFilter]
     [Route("api/[controller]")]
     [ApiController]
     public class OrdersController : BaseController
@@ -48,6 +50,7 @@ namespace BookStore.WebApi.Controllers
             return Ok(orders);
         }
 
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(OrderViewModel), StatusCodes.Status200OK)]
         [HttpGet("{id}")]
         public async Task<ActionResult<OrderViewModel>> GetOrderById(Guid id)
@@ -72,6 +75,7 @@ namespace BookStore.WebApi.Controllers
             return Ok(details);
         }
 
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [HttpPost]
         public async Task<ActionResult> CreateOrder(OrderWriteModel orderDto)
@@ -81,6 +85,7 @@ namespace BookStore.WebApi.Controllers
             return CreatedAtAction(nameof(CreateOrder), new { Success = result });
         }
 
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [HttpPut("{id}")]
         public async Task<ActionResult> UpdateOrder(Guid id, OrderWriteModel orderDto)
@@ -103,6 +108,7 @@ namespace BookStore.WebApi.Controllers
             return Ok(new { Success = result });
         }
 
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [HttpPost("detail")]
         public async Task<ActionResult> AddOrderDetail(DetailWriteModel detailDto)
@@ -124,6 +130,7 @@ namespace BookStore.WebApi.Controllers
             return Ok(new { Success = result });
         }
 
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [HttpPut("detail")]
         public async Task<ActionResult> ChangeDetailAmount(AmountWriteModel newAmountModel)

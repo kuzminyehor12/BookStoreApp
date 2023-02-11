@@ -1,10 +1,10 @@
-﻿using BookStore.Application.Interfaces;
-using BookStore.Application.ViewModels;
+﻿using BookStore.Application.Common.Interfaces;
+using BookStore.Application.Common.ViewModels;
 using BookStore.Domain.Models;
 using MediatR;
 
-namespace BookStore.Application.Books.Commands.CreateBookCommand
-{
+namespace BookStore.Application.Books.Commands.CreateBook
+{ 
     public class CreateBookHandler : IRequestHandler<CreateBook, bool>
     {
         private readonly IBookService _service;

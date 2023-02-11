@@ -1,5 +1,4 @@
-﻿using BookStore.Application.Interfaces;
-using BookStore.Application.ViewModels;
+﻿using BookStore.Application.Common.Interfaces;
 using BookStore.Domain.Models;
 using MediatR;
 using System;
@@ -8,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BookStore.Application.Books.Commands.UpdateBookCommand
+namespace BookStore.Application.Books.Commands.UpdateBook
 {
     internal class UpdateBookHandler : IRequestHandler<UpdateBook, bool>
     {
