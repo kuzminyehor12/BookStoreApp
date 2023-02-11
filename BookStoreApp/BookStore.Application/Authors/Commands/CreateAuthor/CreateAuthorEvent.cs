@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace BookStore.Application.Authors.Commands.CreateAuthor
 {
-    public class CreateAuthorEvent : DomainEvent
+    public class CreateAuthorEvent : AuthorEvent
     {
-        public string Surname { get; set; }
-        public string Name { get; set; }
+        public string Surname { get; init; }
+        public string Name { get; init; }
     }
 }

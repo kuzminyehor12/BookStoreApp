@@ -23,7 +23,7 @@ namespace BookStore.Application.Orders.Commands.CreateOrder
         {
             var order = new Order
             {
-                Total = request.Total ?? default,
+                Id = Guid.NewGuid(),
                 Discount = request.Discount ?? default,
                 CreationDate = request.CreationDate,
                 ClosingDate = null,

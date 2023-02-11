@@ -24,7 +24,6 @@ namespace BookStore.Application.Orders.Commands.UpdateOrder
             var order = new Order
             {
                 Id = request.Id,
-                Total = request.Total ?? default,
                 Discount = request.Discount ?? default,
                 CreationDate = request.CreationDate,
                 ClosingDate = request.ClosingDate,

@@ -7,10 +7,9 @@ using System.Threading.Tasks;
 
 namespace BookStore.Application.Orders.Commands.CreateOrder
 {
-    public class CreateOrderEvent : DomainEvent
+    public class CreateOrderEvent : OrderEvent
     {
-        public decimal? Total { get; set; }
-        public decimal? Discount { get; set; }
-        public DateTime CreationDate { get; set; }
+        public decimal? Discount { get; init; }
+        public DateTime CreationDate { get; init; }
     }
 }

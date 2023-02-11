@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BookStore.Domain.Models
+namespace BookStore.Domain.Primitives
 {
     public class BaseModel
     {

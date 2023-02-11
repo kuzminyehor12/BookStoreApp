@@ -7,9 +7,8 @@ using System.Threading.Tasks;
 
 namespace BookStore.Application.Books.Commands.UpdateBook
 {
-    public class UpdateBookEvent : DomainEvent
+    public class UpdateBookEvent : BookEvent
     {
-        public Guid Id { get; init; }
         public string ISBN { get; init; }
         public string Title { get; init; }
         public string Description { get; init; }

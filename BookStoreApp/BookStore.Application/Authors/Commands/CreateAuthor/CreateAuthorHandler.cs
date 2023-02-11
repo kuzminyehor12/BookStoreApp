@@ -22,6 +22,7 @@ namespace BookStore.Application.Authors.Commands.CreateAuthor
         {
             var author = new Author
             {
+                Id = Guid.NewGuid(),
                 Surname = request.Surname,
                 Name = request.Name
             };

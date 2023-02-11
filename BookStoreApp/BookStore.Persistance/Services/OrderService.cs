@@ -43,10 +43,11 @@ namespace BookStore.Persistance.Services
 
             await _eventBus.PublishAsync(new CreateOrderEvent
             {
+                Id = model.Id,
                 CreationDate = model.CreationDate,
                 Discount = model.Discount,
-                Total = model.Total
-            });
+                Result = result
+            }, cancellationToken);
 
             return result; 
         }
@@ -57,8 +58,9 @@ namespace BookStore.Persistance.Services
 
             await _eventBus.PublishAsync(new DeleteOrderEvent
             {
-                Id = id
-            });
+                Id = id,
+                Result = result
+            }, cancellationToken);
 
             return result;
         }
@@ -72,10 +74,10 @@ namespace BookStore.Persistance.Services
                 Id = model.Id,
                 CreationDate = model.CreationDate,
                 Discount = model.Discount,
-                Total = model.Total,
                 Status = model.Status,
-                ClosingDate = model.ClosingDate
-            });
+                ClosingDate = model.ClosingDate,
+                Result = result
+            }, cancellationToken);
 
             return result;
         }
@@ -103,9 +105,11 @@ namespace BookStore.Persistance.Services
 
             await _eventBus.PublishAsync(new AddOrderDetailEvent
             {
+                Id = detail.Id,
                 Amount = detail.Amount,
                 OrderId = detail.OrderId,
-                BookId = detail.BookId
+                BookId = detail.BookId,
+                Result = result
             }, cancellationToken);
             
             return result;
@@ -128,13 +132,16 @@ namespace BookStore.Persistance.Services
                 OrderId = detail.OrderId
             };
 
+            var result =  await _detailRepository.UpdateAsync(newDetail, cancellationToken);
+
             await _eventBus.PublishAsync(new ChangeOrderDetailAmountEvent
             {
                 Id = detailId,
-                Amount = newAmount
+                Amount = newAmount,
+                Result = result
             }, cancellationToken);
 
-            return await _detailRepository.UpdateAsync(newDetail, cancellationToken);
+            return result;
         }
 
         public async Task<IEnumerable<OrderDetailViewModel>> GetDetailsByOrderIdAsync(Guid orderId, CancellationToken cancellationToken = default)
@@ -174,7 +181,8 @@ namespace BookStore.Persistance.Services
 
             await _eventBus.PublishAsync(new RemoveOrderDetailEvent
             {
-                Id = detailId
+                Id = detailId,
+                Result = result
             }, cancellationToken);
 
             return result;

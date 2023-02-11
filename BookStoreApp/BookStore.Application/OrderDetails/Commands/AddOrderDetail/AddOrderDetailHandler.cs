@@ -22,6 +22,7 @@ namespace BookStore.Application.OrderDetails.Commands.AddOrderDetail
         {
             var detail = new OrderDetail
             {
+                Id = Guid.NewGuid(),
                 BookId = request.BookId,
                 OrderId = request.OrderId,
                 Amount = request.Amount ?? default

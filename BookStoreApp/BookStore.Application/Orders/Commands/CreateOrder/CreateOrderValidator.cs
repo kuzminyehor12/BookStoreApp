@@ -11,7 +11,6 @@ namespace BookStore.Application.Orders.Commands.CreateOrder
     {
         public CreateOrderValidator()
         {
-            RuleFor(x => x.Total).GreaterThanOrEqualTo(0);
             RuleFor(x => x.Discount).GreaterThanOrEqualTo(0);
             RuleFor(x => x.CreationDate).GreaterThanOrEqualTo(new DateTime(2023, 01, 01));
         }

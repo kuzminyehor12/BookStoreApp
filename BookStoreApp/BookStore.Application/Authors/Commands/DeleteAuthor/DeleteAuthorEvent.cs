@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace BookStore.Application.Authors.Commands.DeleteAuthor
 {
-    public class DeleteAuthorEvent : DomainEvent
+    public class DeleteAuthorEvent : AuthorEvent
     {
-        public Guid Id { get; set; }
+        
     }
 }

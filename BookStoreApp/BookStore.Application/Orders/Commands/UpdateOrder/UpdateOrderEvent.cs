@@ -8,10 +8,8 @@ using System.Threading.Tasks;
 
 namespace BookStore.Application.Orders.Commands.UpdateOrder
 {
-    public class UpdateOrderEvent : DomainEvent
+    public class UpdateOrderEvent : OrderEvent
     {
-        public Guid Id { get; init; }
-        public decimal? Total { get; init; }
         public decimal? Discount { get; init; }
         public DateTime CreationDate { get; init; }
         public DateTime? ClosingDate { get; init; }

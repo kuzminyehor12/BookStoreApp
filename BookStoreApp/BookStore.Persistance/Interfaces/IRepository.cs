@@ -1,5 +1,5 @@
 ﻿using BookStore.Application.Common.Validation;
-using BookStore.Domain.Models;
+using BookStore.Domain.Primitives;
 using System;
 using System.Collections.Generic;
 using System.Linq;

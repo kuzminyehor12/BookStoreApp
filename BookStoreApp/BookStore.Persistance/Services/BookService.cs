@@ -39,12 +39,14 @@ namespace BookStore.Persistance.Services
 
             await _eventBus.PublishAsync(new CreateBookEvent
             {
+                Id = model.Id,
                 ISBN = model.ISBN,
                 Title = model.Title,
                 AmountOnStock = model.AmountOnStock,
                 Price = model.Price,
                 Description = model.Description,
-                AuthorId = model.AuthorId
+                AuthorId = model.AuthorId,
+                Result = result
             }, cancellationToken);
             
             return result;
@@ -56,7 +58,8 @@ namespace BookStore.Persistance.Services
 
             await _eventBus.PublishAsync(new DeleteBookEvent
             {
-                Id = id
+                Id = id,
+                Result = result
             }, cancellationToken);
 
             return result; 
@@ -116,7 +119,8 @@ namespace BookStore.Persistance.Services
                 AmountOnStock = model.AmountOnStock,
                 Price = model.Price,
                 Description = model.Description,
-                AuthorId = model.AuthorId
+                AuthorId = model.AuthorId,
+                Result = result
             }, cancellationToken);
             
             return result;

@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace BookStore.Application.Books.Commands.DeleteBook
 {
-    public class DeleteBookEvent : DomainEvent
+    public class DeleteBookEvent : BookEvent
     {
-        public Guid Id { get; init; }
+        
     }
 }

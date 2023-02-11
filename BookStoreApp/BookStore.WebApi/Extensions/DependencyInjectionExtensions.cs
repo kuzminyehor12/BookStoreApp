@@ -1,5 +1,7 @@
 ﻿using BookStore.Application.Common.Behaviors;
 using BookStore.Application.Common.Interfaces;
+using BookStore.Mongo.Implementations;
+using BookStore.Mongo.Interfaces;
 using BookStore.Persistance.Interfaces;
 using BookStore.Persistance.Services;
 using BookStoreApp.DataAccess.Repositories;
@@ -24,7 +26,8 @@ namespace BookStore.WebApi.Extensions
                         .AddScoped<IAuthorRepository, AuthorRepository>()
                         .AddScoped<IBookRepository, BookRepository>()
                         .AddScoped<IOrderRepository, OrderRepository>()
-                        .AddScoped<IDetailRepository, DetailRepository>();
+                        .AddScoped<IDetailRepository, DetailRepository>()
+                        .AddScoped(typeof(IMongoRepository<>), typeof(MongoRepository<>));
         }
 
         public static IServiceCollection AddBusiness(this IServiceCollection serviceCollection)

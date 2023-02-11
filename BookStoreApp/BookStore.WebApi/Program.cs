@@ -1,7 +1,13 @@
+using BookStore.Application.Books.Commands.CreateBook;
+using BookStore.Application.Books.Commands.UpdateBook;
 using BookStore.Application.Common.Interfaces;
 using BookStore.Application.Common.Mappings;
+using BookStore.Application.Common.Messaging;
+using BookStore.Mongo.Infrastructure;
+using BookStore.SyncronizationUnit.Factories;
 using BookStore.WebApi.Configurations;
 using BookStore.WebApi.Extensions;
+using BookStoreApp.DataAccess.Messaging;
 using FluentValidation;
 using MassTransit;
 using MediatR;
@@ -13,8 +19,12 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddDatabase(builder.Configuration);
 builder.Services.AddMediatR(typeof(IService<,>).Assembly);
+
 builder.Services.Configure<MessageBrokerSettings>(builder.Configuration.GetSection("MessageBrokerSettings"));
 builder.Services.AddSingleton(provider => provider.GetRequiredService<IOptions<MessageBrokerSettings>>().Value);
+
+builder.Services.Configure<MongoSettings>(builder.Configuration.GetSection("MongoSettings"));
+builder.Services.AddSingleton(provider => provider.GetRequiredService<IOptions<MongoSettings>>().Value);
 
 builder.Services.AddAutoMapper(options =>
 {
@@ -28,6 +38,11 @@ builder.Services.AddPipelines();
 builder.Services.AddValidatorsFromAssembly(typeof(IService<,>).Assembly, includeInternalTypes: true);
 builder.Services.AddMassTransit(options =>
 {
+    options.AddBookEventConsumers();
+    options.AddAuthorEventConsumers();
+    options.AddDetailEventConsumers();
+    options.AddOrderEventConsumers();
+
     options.SetKebabCaseEndpointNameFormatter();
     options.UsingRabbitMq((context, configurator) =>
     {
@@ -39,6 +54,9 @@ builder.Services.AddMassTransit(options =>
         });
     });
 });
+
+builder.Services.AddTransient<ISyncronizationUnitFactory, SyncronizationUnitFactory>();
+builder.Services.AddTransient<IEventBus, EventBus>();
 
 builder.Services.AddCors(options =>
 {

@@ -20,7 +20,9 @@
 
   <ItemGroup>
     <ProjectReference Include="..\BookStore.Application\BookStore.Application.csproj" />
+    <ProjectReference Include="..\BookStore.Mongo\BookStore.Mongo.csproj" />
     <ProjectReference Include="..\BookStore.Persistance\BookStore.Persistance.csproj" />
+    <ProjectReference Include="..\BookStore.SyncronizationUnit\BookStore.SyncronizationUnit.csproj" />
     <ProjectReference Include="..\BookStoreApp.DataAccess\BookStoreApp.DataAccess.csproj" />
   </ItemGroup>
 

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace BookStore.Application.Books.Commands.CreateBook
 {
-    public class CreateBookEvent : DomainEvent
+    public class CreateBookEvent : BookEvent
     {
         public string ISBN { get; init; }
         public string Title { get; init; }

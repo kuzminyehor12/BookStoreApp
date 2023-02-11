@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BookStore.Application.OrderDetails.Commands.AddOrderDetail
 {
-    public class AddOrderDetailEvent : DomainEvent
+    public class AddOrderDetailEvent : DetailEvent
     {
         public Guid BookId { get; init; }
         public Guid OrderId { get; init; }

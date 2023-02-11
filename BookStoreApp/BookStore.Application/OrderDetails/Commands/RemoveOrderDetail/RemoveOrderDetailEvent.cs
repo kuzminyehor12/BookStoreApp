@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace BookStore.Application.OrderDetails.Commands.RemoveOrderDetail
 {
-    public class RemoveOrderDetailEvent : DomainEvent
+    public class RemoveOrderDetailEvent : DetailEvent
     {
-        public Guid Id { get; set; }
+        
     }
 }

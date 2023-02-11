@@ -17,6 +17,7 @@ namespace BookStore.Application.Books.Commands.CreateBook
         {
             var book = new Book
             {
+                Id = Guid.NewGuid(),
                 Title = request.Title,
                 Description = request.Description,
                 Price = request.Price ?? default,

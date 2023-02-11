@@ -1,4 +1,5 @@
 ﻿using BookStore.Domain.Enums;
+using BookStore.Domain.Primitives;
 using System;
 using System.Collections.Generic;
 using System.Linq;
