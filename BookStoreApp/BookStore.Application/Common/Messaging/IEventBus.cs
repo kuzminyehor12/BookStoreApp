@@ -8,6 +8,7 @@ namespace BookStore.Application.Common.Messaging
 {
     public interface IEventBus
     {
-        Task PublishAsync(DomainEvent message, CancellationToken cancellationToken = default);
+        Task PublishAsync<TMessage>(TMessage message, CancellationToken cancellationToken = default)
+            where TMessage : DomainEvent;
     }
 }

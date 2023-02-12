@@ -29,7 +29,7 @@ namespace BookStore.SyncronizationUnit.Units
 
         public async Task<Result> AddAsync(object model, CancellationToken cancellationToken = default)
         {
-            if (model is not AddOrderDetailEvent @event || @event.Result.IsFailure)
+            if (model is not AddOrderDetailEvent @event)
             {
                 return Result.Failure();
             }
@@ -68,7 +68,7 @@ namespace BookStore.SyncronizationUnit.Units
 
         public async Task<Result> ReplaceAsync(object model, CancellationToken cancellationToken = default)
         {
-            if (model is not ChangeOrderDetailAmountEvent @event || @event.Result.IsFailure)
+            if (model is not ChangeOrderDetailAmountEvent @event)
             {
                 return Result.Failure();
             }

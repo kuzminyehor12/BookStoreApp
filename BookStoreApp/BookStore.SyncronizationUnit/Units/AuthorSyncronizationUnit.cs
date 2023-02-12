@@ -11,8 +11,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
-
 namespace BookStore.SyncronizationUnit.Units
 {
     public class AuthorSyncronizationUnit : ISyncronizationUnit
@@ -27,7 +27,7 @@ namespace BookStore.SyncronizationUnit.Units
 
         public async Task<Result> AddAsync(object model, CancellationToken cancellationToken = default)
         {
-            if (model is not CreateAuthorEvent @event || @event.Result.IsFailure)
+            if (model is not CreateAuthorEvent @event)
             {
                 return Result.Failure();
             }
@@ -64,7 +64,8 @@ namespace BookStore.SyncronizationUnit.Units
 
         public async Task<Result> ReplaceAsync(object model, CancellationToken cancellationToken = default)
         {
-            if (model is not UpdateAuthorEvent @event || @event.Result.IsFailure)
+            
+            if (model is not UpdateAuthorEvent @event)
             {
                 return Result.Failure();
             }

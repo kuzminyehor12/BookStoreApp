@@ -17,7 +17,8 @@ namespace BookStoreApp.DataAccess.Messaging
             _publisher = publisher;
         }
 
-        public Task PublishAsync(DomainEvent message, CancellationToken cancellationToken = default)
+        public Task PublishAsync<TMessage>(TMessage message, CancellationToken cancellationToken = default)
+            where TMessage : DomainEvent
         {
             return _publisher.Publish(message, cancellationToken);
         }

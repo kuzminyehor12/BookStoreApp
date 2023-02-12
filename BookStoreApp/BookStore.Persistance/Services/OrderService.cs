@@ -46,7 +46,7 @@ namespace BookStore.Persistance.Services
                 Id = model.Id,
                 CreationDate = model.CreationDate,
                 Discount = model.Discount,
-                Result = result
+                Result = result.ToString()
             }, cancellationToken);
 
             return result; 
@@ -59,7 +59,7 @@ namespace BookStore.Persistance.Services
             await _eventBus.PublishAsync(new DeleteOrderEvent
             {
                 Id = id,
-                Result = result
+                Result = result.ToString()
             }, cancellationToken);
 
             return result;
@@ -76,7 +76,7 @@ namespace BookStore.Persistance.Services
                 Discount = model.Discount,
                 Status = model.Status,
                 ClosingDate = model.ClosingDate,
-                Result = result
+                Result = result.ToString()
             }, cancellationToken);
 
             return result;
@@ -109,7 +109,7 @@ namespace BookStore.Persistance.Services
                 Amount = detail.Amount,
                 OrderId = detail.OrderId,
                 BookId = detail.BookId,
-                Result = result
+                Result = result.ToString()
             }, cancellationToken);
             
             return result;
@@ -138,7 +138,7 @@ namespace BookStore.Persistance.Services
             {
                 Id = detailId,
                 Amount = newAmount,
-                Result = result
+                Result = result.ToString()
             }, cancellationToken);
 
             return result;
@@ -182,7 +182,7 @@ namespace BookStore.Persistance.Services
             await _eventBus.PublishAsync(new RemoveOrderDetailEvent
             {
                 Id = detailId,
-                Result = result
+                Result = result.ToString()
             }, cancellationToken);
 
             return result;

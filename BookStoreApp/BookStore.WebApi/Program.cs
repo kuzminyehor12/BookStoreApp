@@ -47,11 +47,14 @@ builder.Services.AddMassTransit(options =>
     options.UsingRabbitMq((context, configurator) =>
     {
         var settings = context.GetRequiredService<MessageBrokerSettings>();
+
         configurator.Host(new Uri(settings.Host), host =>
         {
             host.Username(settings.Username);
             host.Password(settings.Password);
         });
+
+        configurator.ConfigureEndpoints(context, KebabCaseEndpointNameFormatter.Instance);
     });
 });
 
