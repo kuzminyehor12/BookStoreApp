@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using BookStore.Application.Common.Interfaces;
+using BookStore.Application.Common.Models;
 using BookStore.Domain.Enums;
 using BookStore.Domain.Models;
 using BookStore.Mongo.Infrastructure;
@@ -12,7 +13,7 @@ using System.Threading.Tasks;
 namespace BookStore.Mongo.Models
 {
     [DocumentCollection("orders")]
-    public class OrderReadModel : Document, IMapWith<Order>
+    public class OrderReadModel : Document, IMapWith<OrderViewModel>
     {
         public OrderDetailReadModel[]? OrderDetails { get; set; }
         public decimal Discount { get; set; }
@@ -23,7 +24,10 @@ namespace BookStore.Mongo.Models
         public bool IsDeleted { get; set; }
         public void UseMap(Profile profile)
         {
-            profile.CreateMap<Order, OrderReadModel>();
+            profile.CreateMap<OrderViewModel, OrderReadModel>()
+                .ForMember(orm => orm.OrderDetails, mem => mem
+                    .MapFrom(ovm => ovm.OrderDetails))
+                .ReverseMap();
         }
     }
 }

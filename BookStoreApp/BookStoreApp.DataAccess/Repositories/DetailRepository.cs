@@ -22,8 +22,8 @@ namespace BookStoreApp.DataAccess.Repositories
         }
         public async Task<Result> CreateAsync(OrderDetail entity, CancellationToken cancellationToken)
         {
-            var command = $"INSERT INTO {TableName}(book_id, order_id, amount) " +
-                        "VALUES (@BookId, @OrderId, @Amount)";
+            var command = $"INSERT INTO {TableName}(id, book_id, order_id, amount) " +
+                        "VALUES (@Id, @BookId, @OrderId, @Amount)";
 
             try
             {

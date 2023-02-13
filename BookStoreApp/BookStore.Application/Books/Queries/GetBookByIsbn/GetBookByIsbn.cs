@@ -1,4 +1,5 @@
-﻿using BookStore.Application.Common.ViewModels;
+﻿using BookStore.Application.Common.Models;
+using BookStore.Application.Common.ViewModels;
 using MediatR;
 using System;
 using System.Collections.Generic;

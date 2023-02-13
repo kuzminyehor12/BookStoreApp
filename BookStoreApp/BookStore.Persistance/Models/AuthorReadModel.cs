@@ -12,14 +12,13 @@ using System.Threading.Tasks;
 namespace BookStore.Mongo.Models
 {
     [DocumentCollection("authors")]
-    public class AuthorReadModel : Document, IMapWith<Author>
+    public class AuthorReadModel : Document, IMapWith<AuthorReadModel>
     {
         public string FullName { get; set; }
         public void UseMap(Profile profile)
         {
-            profile.CreateMap<Author, AuthorReadModel>()
-                .ForMember(avm => avm.FullName, mem => mem
-                    .MapFrom(a => a.Surname + " " + a.Name));
+            profile.CreateMap<AuthorReadModel, AuthorViewModel>()
+                .ReverseMap();
         }
     }
 }

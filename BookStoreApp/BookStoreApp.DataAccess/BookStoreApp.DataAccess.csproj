@@ -12,6 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\BookStore.Mongo\BookStore.Mongo.csproj" />
     <ProjectReference Include="..\BookStore.Persistance\BookStore.Persistance.csproj" />
   </ItemGroup>
 

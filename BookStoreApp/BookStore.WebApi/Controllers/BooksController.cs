@@ -7,6 +7,7 @@ using BookStore.Application.Books.Queries.GetBookByIdQuery;
 using BookStore.Application.Books.Queries.GetBookByIsbn;
 using BookStore.Application.Books.Queries.GetBooksByAuthorId;
 using BookStore.Application.Books.Queries.GetBooksByTitle;
+using BookStore.Application.Common.Models;
 using BookStore.Application.Common.ViewModels;
 using BookStore.Application.OrderDetails.Queries.GetOrderDetailsByBookId;
 using BookStore.Application.OrderDetails.Queries.GetOrderDetailsByOrderId;

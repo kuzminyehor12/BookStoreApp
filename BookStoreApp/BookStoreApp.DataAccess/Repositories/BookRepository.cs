@@ -23,8 +23,8 @@ namespace BookStoreApp.DataAccess.Repositories
 
         public async Task<Result> CreateAsync(Book entity, CancellationToken cancellationToken)
         {
-            var command = $"INSERT INTO {TableName}(isbn, title, description, amount_on_stock, price, author_id) " +
-                          "VALUES (@Isbn, @Title, @Description, @AmountOnStock, @Price, @AuthorId)";
+            var command = $"INSERT INTO {TableName}(id, isbn, title, description, amount_on_stock, price, author_id) " +
+                          "VALUES (@Id, @Isbn, @Title, @Description, @AmountOnStock, @Price, @AuthorId)";
 
             try
             {

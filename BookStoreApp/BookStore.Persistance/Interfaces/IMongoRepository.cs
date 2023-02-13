@@ -1,5 +1,4 @@
-﻿using BookStore.Mongo.Models;
-using MongoDB.Bson;
+﻿using BookStore.Application.Common.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace BookStore.Mongo.Interfaces
 {
-    public interface IMongoRepository<TDocument> where TDocument : Document
+    public interface IMongoRepository<TDocument> where TDocument : class
     {
         Task<IEnumerable<TDocument>> ToListAsync();
         Task<IEnumerable<TDocument>> FilterBy(

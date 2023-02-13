@@ -1,4 +1,5 @@
-﻿using BookStore.Application.Common.ViewModels;
+﻿using BookStore.Application.Common.Models;
+using BookStore.Application.Common.ViewModels;
 using BookStore.Domain.Models;
 using System;
 using System.Collections.Generic;

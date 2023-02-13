@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using BookStore.Application.Common.Interfaces;
+using BookStore.Application.Common.ViewModels;
 using BookStore.Domain.Models;
+using BookStore.Domain.Primitives;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,9 +11,8 @@ using System.Threading.Tasks;
 
 namespace BookStore.Application.Common.ViewModels
 {
-    public class AuthorViewModel : IMapWith<Author>
+    public class AuthorViewModel : BaseModel, IMapWith<Author>
     {
-        public Guid Id { get; set; }
         public string FullName { get; set; }
         public void UseMap(Profile profile)
         {

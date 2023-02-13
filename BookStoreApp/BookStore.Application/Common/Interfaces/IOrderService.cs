@@ -1,4 +1,5 @@
-﻿using BookStore.Application.Common.Validation;
+﻿using BookStore.Application.Common.Models;
+using BookStore.Application.Common.Validation;
 using BookStore.Application.Common.ViewModels;
 using BookStore.Domain.Models;
 using System;

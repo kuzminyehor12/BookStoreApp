@@ -14,6 +14,7 @@
   <ItemGroup>
     <ProjectReference Include="..\BookStore.Application\BookStore.Application.csproj" />
     <ProjectReference Include="..\BookStore.Domain\BookStore.Domain.csproj" />
+    <ProjectReference Include="..\BookStore.Persistance\BookStore.Persistance.csproj" />
   </ItemGroup>
 
 </Project>

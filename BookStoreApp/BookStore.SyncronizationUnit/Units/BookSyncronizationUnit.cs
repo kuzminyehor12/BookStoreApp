@@ -2,6 +2,7 @@
 using BookStore.Application.Books.Commands.CreateBook;
 using BookStore.Application.Books.Commands.UpdateBook;
 using BookStore.Application.Common.Interfaces;
+using BookStore.Application.Common.Models;
 using BookStore.Application.Common.Validation;
 using BookStore.Mongo.Interfaces;
 using BookStore.Mongo.Models;

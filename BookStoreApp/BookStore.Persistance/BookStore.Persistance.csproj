@@ -12,7 +12,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\BookStore.Application\BookStore.Application.csproj" />
-    <ProjectReference Include="..\BookStore.Mongo\BookStore.Mongo.csproj" />
   </ItemGroup>
 
 </Project>

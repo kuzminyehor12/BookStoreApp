@@ -9,7 +9,6 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using static Dapper.SqlMapper;
 
 namespace BookStoreApp.DataAccess.Repositories
 {
@@ -24,8 +23,8 @@ namespace BookStoreApp.DataAccess.Repositories
 
         public async Task<Result> CreateAsync(Author entity, CancellationToken cancellationToken)
         {
-            var command = $"INSERT INTO {TableName}(name, surname) " +
-                         "VALUES (@Name, @Surname)";;
+            var command = $"INSERT INTO {TableName}(id, name, surname) " +
+                         "VALUES (@Id, @Name, @Surname)";;
 
             try
             {

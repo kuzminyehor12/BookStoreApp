@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using BookStore.Application.Common.Models;
 using BookStore.Application.Common.ViewModels;
 using BookStore.Application.OrderDetails.Commands.AddOrderDetail;
 using BookStore.Application.OrderDetails.Commands.ChangeOrderDetailAmount;

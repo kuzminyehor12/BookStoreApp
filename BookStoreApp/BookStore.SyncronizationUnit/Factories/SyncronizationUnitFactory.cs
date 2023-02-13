@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using BookStore.Application.Common.Interfaces;
 using BookStore.Application.Common.Messaging;
+using BookStore.Application.Common.Models;
 using BookStore.Mongo.Interfaces;
 using BookStore.Mongo.Models;
 using BookStore.Persistance.Interfaces;

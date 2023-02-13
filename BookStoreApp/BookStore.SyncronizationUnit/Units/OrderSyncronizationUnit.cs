@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using BookStore.Application.Common.Interfaces;
+using BookStore.Application.Common.Models;
 using BookStore.Application.Common.Validation;
 using BookStore.Application.Orders.Commands.CreateOrder;
 using BookStore.Application.Orders.Commands.UpdateOrder;

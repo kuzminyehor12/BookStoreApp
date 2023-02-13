@@ -4,9 +4,12 @@ using BookStore.Application.Authors.Commands.DeleteAuthor;
 using BookStore.Application.Authors.Commands.UpdateAuthor;
 using BookStore.Application.Common.Interfaces;
 using BookStore.Application.Common.Messaging;
+using BookStore.Application.Common.Models;
 using BookStore.Application.Common.Validation;
 using BookStore.Application.Common.ViewModels;
 using BookStore.Domain.Models;
+using BookStore.Mongo.Interfaces;
+using BookStore.Mongo.Models;
 using BookStore.Persistance.Interfaces;
 using BookStore.Persistance.Validation;
 using System;
@@ -22,19 +25,23 @@ namespace BookStore.Persistance.Services
         private readonly IAuthorRepository _authorRepository;
         private readonly IMapper _mapper;
         private readonly IEventBus _eventBus;
+        private readonly IRepositoryFactory _repositoryFactory;
         public AuthorService(
-            IAuthorRepository authorRepository, 
+            IAuthorRepository authorRepository,
             IMapper mapper,
-            IEventBus eventBus)
+            IEventBus eventBus,
+            IRepositoryFactory repositoryFactory)
         {
             _authorRepository = authorRepository;
             _mapper = mapper;
             _eventBus = eventBus;
+            _repositoryFactory = repositoryFactory;
         }
 
         public async Task<Result> CreateAsync(Author model, CancellationToken cancellationToken = default)
         {
-            var result = await _authorRepository.CreateAsync(model, cancellationToken);
+            var repository = await _repositoryFactory.GetCommandRepository<IAuthorRepository, Author>();
+            var result = await repository.CreateAsync(model, cancellationToken);
 
             await _eventBus.PublishAsync(new CreateAuthorEvent
             {
@@ -49,7 +56,8 @@ namespace BookStore.Persistance.Services
 
         public async Task<Result> DeleteAsync(Guid id, CancellationToken cancellationToken = default)
         {
-           var result = await _authorRepository.DeleteAsync(id, cancellationToken);
+            var repository = await _repositoryFactory.GetCommandRepository<IAuthorRepository, Author>();
+            var result = await repository.DeleteAsync(id, cancellationToken);
             
            await _eventBus.PublishAsync(new DeleteAuthorEvent
            {
@@ -62,7 +70,8 @@ namespace BookStore.Persistance.Services
 
         public async Task<Result> UpdateAsync(Author model, CancellationToken cancellationToken = default)
         {
-            var result = await _authorRepository.UpdateAsync(model, cancellationToken);
+            var repository = await _repositoryFactory.GetCommandRepository<IAuthorRepository, Author>();
+            var result = await repository.UpdateAsync(model, cancellationToken);
 
             await _eventBus.PublishAsync(new UpdateAuthorEvent
             {
@@ -78,13 +87,15 @@ namespace BookStore.Persistance.Services
 
         public async Task<IEnumerable<AuthorViewModel>> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            var entities = await _authorRepository.GetAllAsync(cancellationToken);
+            var repository = await _repositoryFactory.GetQueryRepository<AuthorReadModel>();
+            var entities = await repository.ToListAsync();
             return _mapper.Map<IEnumerable<AuthorViewModel>>(entities);
         }
 
         public async Task<AuthorViewModel> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
         {
-            var entity = await _authorRepository.GetByIdAsync(id, cancellationToken);
+            var repository = await _repositoryFactory.GetQueryRepository<AuthorReadModel>();
+            var entity = await repository.FindByIdAsync(id);
 
             if (entity is null)
             {

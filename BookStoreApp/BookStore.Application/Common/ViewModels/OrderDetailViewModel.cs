@@ -1,19 +1,18 @@
 ﻿using AutoMapper;
 using BookStore.Application.Common.Interfaces;
 using BookStore.Domain.Models;
+using BookStore.Domain.Primitives;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BookStore.Application.Common.ViewModels
+namespace BookStore.Application.Common.Models
 {
-    public class OrderDetailViewModel : IMapWith<OrderDetail>
+    public class OrderDetailViewModel : BaseModel, IMapWith<Order>
     {
-        public Guid Id { get; set; }
-        public string? BookName { get; set; }
-        public decimal BookPrice { get; set; }
+        public BookViewModel? Book { get; set; }
         public int Amount { get; set; }
         public void UseMap(Profile profile)
         {

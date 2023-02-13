@@ -4,6 +4,9 @@ using BookStore.Application.Common.Interfaces;
 using BookStore.Application.Common.Mappings;
 using BookStore.Application.Common.Messaging;
 using BookStore.Mongo.Infrastructure;
+using BookStore.Mongo.Interfaces;
+using BookStore.Persistance.Interfaces;
+using BookStore.Persistance.Services;
 using BookStore.SyncronizationUnit.Factories;
 using BookStore.WebApi.Configurations;
 using BookStore.WebApi.Extensions;
@@ -30,6 +33,7 @@ builder.Services.AddAutoMapper(options =>
 {
     options.AddProfile(new AssemblyMappingProfile(Assembly.GetExecutingAssembly()));
     options.AddProfile(new AssemblyMappingProfile(typeof(IService<,>).Assembly));
+    options.AddProfile(new AssemblyMappingProfile(typeof(IMongoRepository<>).Assembly));
 });
 
 builder.Services.AddRepositories();
@@ -57,6 +61,8 @@ builder.Services.AddMassTransit(options =>
         configurator.ConfigureEndpoints(context, KebabCaseEndpointNameFormatter.Instance);
     });
 });
+
+builder.Services.AddScoped<IRepositoryFactory, RepositoryFactory>();
 
 builder.Services.AddTransient<ISyncronizationUnitFactory, SyncronizationUnitFactory>();
 builder.Services.AddTransient<IEventBus, EventBus>();
