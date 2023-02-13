@@ -1,0 +1,15 @@
+version: '3'
+services: 
+    bookstore-mq:
+        image: rabbitmq:3.11.7-management
+        container_name: Queue
+        hostname: bookstore-queue
+        ports:
+            - 5672:5672
+            - 15672:15672
+        volumes:
+            - ./.containers/queue/data/:/var/lib/rabbitmq
+            - ./.containers/queue/log/:/var/log/rabbitmq
+        environment:
+            RABBITMQ_DEFAULT_USER: guest
+            RABBITMQ_DEFAULT_PASSWORD: guest
